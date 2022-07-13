@@ -1,18 +1,23 @@
 const express = require('express')
 const { protectedRoute } = require('../middlewares/authMiddleware')
-const { registerUser, loginUser, getMyProfile, getAllUsers, updateMyprofile, createTest, getAllTest } = require('../controllers/userController')
+const { registerUser,
+        loginUser,
+        getMyProfile,
+        getAllUsers,
+        updateMyprofile,
+        deleteMyProfile,} = require('../controllers/userController')
 
 const router = express.Router()
 
 // POST a user
-// @route /api/v1/mylibrary/create/user
+// @route /api/v1/mylibrary/auth/signup
 // Desc: (PUBLIC) a post request for creating a new user
-router.post('/create/user', registerUser)
+router.post('/auth/signup', registerUser)
 
 // POST a user
-// @route /api/v1/mylibrary/auth/user
+// @route /api/v1/mylibrary/auth/signin
 // Desc: (PUBLIC) a post request for logining in an existing user
-router.post('/auth/user', loginUser)
+router.post('/auth/signin', loginUser)
 
 // GET my profile
 // @route /api/v1/mylibrary/user/me
@@ -24,19 +29,14 @@ router.get('/user/me', protectedRoute, getMyProfile)
 // Desc: (PRIVATE) a get request for getting all users
 router.get('/allusers', protectedRoute, getAllUsers)
 
-// POST a test data
-// @route /api/v1/mylibrary/post/test
-// Desc: (PRIVATE) a post request for posting a test data
-router.post('/post/test', protectedRoute, createTest)
-
-// GET all test
-// @route /api/v1/mylibrary/alltest
-// Desc: (PRIVATE) a get request for getting all test
-router.get('/allTest', protectedRoute, getAllTest)
-
 // UPDATE my profile
 // @route /api/v1/mylibrary/user/update/me
 // Desc: (PRIVATE) a patch request to update my data
 router.patch('/user/update/me/:id', protectedRoute, updateMyprofile)
+
+// DELETE my profile
+// @route /api/v1/mylibrary/user/update/me
+// Desc: (PRIVATE) a delete request to delete my data
+router.delete('/user/delete/me/:id', protectedRoute, deleteMyProfile)
 
 module.exports = router

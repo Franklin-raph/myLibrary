@@ -12,15 +12,6 @@ const createToken = (id) => {
     })
 }
 
-const createTest = async (req, res) => {
-    const test = await Test.create({
-        title: req.body.title,
-        user: req.user.id
-    })
-
-    res.status(201).json(test)
-}
-
 // register user
 const registerUser = async (req, res) => {
     const { name, password, email } = req.body
@@ -40,7 +31,7 @@ const registerUser = async (req, res) => {
 
         // creating the user
         const user = new User({
-            name, password, email,avatar
+            name, password, email, avatar
         })
 
         // Hashing the password
@@ -70,9 +61,12 @@ const loginUser = async (req, res) => {
         
         const token = createToken(user._id)
 
-        if(user &&(await bcrypt.compare(password, user.password))){
+        if(user && (await bcrypt.compare(password, user.password))){
             return res.status(200).json({user,token})
+        }else{
+            res.status(400).json({Err: "Inavlid login credentials"})
         }
+        // res.send({email, password, user})
     } catch (error) {
         return res.status(500).json({Err: error.message})
     }
@@ -80,14 +74,16 @@ const loginUser = async (req, res) => {
 
 // view my profile
 const getMyProfile = async (req, res) => {
-
     try {
-        const { _id, name, email } = await User.findById(req.user.id)
+        const userDetails = await User.findById(req.user.id)
+        console.log(userDetails._id)
 
         const test = await Test.find({user: req.user.id})
 
+        if(!mongoose.Types.ObjectId.isValid(userDetails._id.toString())) return res.status(404).json({Err: "No such user found"})
+
         res.status(200).json({
-            id:_id,name,email,test
+            userDetails, test
         })
     } catch (error) {
         console.log(error)
@@ -97,20 +93,15 @@ const getMyProfile = async (req, res) => {
 
 // update my profile
 const updateMyprofile = async (req, res) => {
-    const { id } = req.params
-    const { email, name } = req.body
 
+    const userId = req.params.id
     try {
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such user found"})
+        if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({Err: "No such user found"})
 
-        // checking if user already exists
-        let userEmail = await User.findOne({email})
-        if(userEmail) return res.status(400).json({msg:"User with this email already exists"})
-        
-        let userName = await User.findOne({name})
-        if(userName) return res.status(400).json({msg:"User with this name already exists"})
+        const signedInUserId = await User.findById(req.user.id)
+        if(userId !== signedInUserId._id.toString()) return res.status(401).json({Msg: "Not authorized"})
 
-        const updatedProfile = await User.findOneAndUpdate({_id: id}, {
+        const updatedProfile = await User.findOneAndUpdate({_id: userId}, {
             ...req.body
         })
 
@@ -122,14 +113,19 @@ const updateMyprofile = async (req, res) => {
 
 // Delete my profile
 const deleteMyProfile = async (req, res) => {
-    const { id } = req.params
 
+    const userId = req.params.id
     try {
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such user found"})
+        if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({Err: "No such user found"})
 
+        const signedInUserId = await User.findById(req.user.id)
+        if(userId !== signedInUserId._id.toString()) return res.status(401).json({Msg: "Not authorized"})
+
+        await User.findOneAndDelete({_id: userId})
+        res.status(200).json({Msg: "User's details deleted successfully"})
         
     } catch (error) {
-        
+        res.status(500).json({Err: error.message})
     }
 }
 
@@ -143,24 +139,11 @@ const getAllUsers = async (req, res) => {
     }
 }
 
-// view all test
-const getAllTest = async (req, res) => {
-    try {
-        const allTest = await Test.find().sort({ createdAt: -1 })
-        res.status(200).json(allTest)
-    } catch (error) {
-        res.status(500).json({Err: error.message})
-    }
-}
-
 module.exports = {
     registerUser,
     loginUser,
     getMyProfile,
     updateMyprofile,
-    getAllUsers,
-
-    createTest,
-    getAllTest,
-    
+    deleteMyProfile,
+    getAllUsers
 }

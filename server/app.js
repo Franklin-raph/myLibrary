@@ -2,14 +2,14 @@ const express = require('express')
 const morgan = require('morgan')
 require('dotenv').config()
 const db = require('./config/db')
-const userRoutes = require('./routes/userRoutes')
 
 const app = express()
 
 // middlewares
 app.use(express.json())
 app.use(morgan('dev'))
-app.use('/api/v1/mylibrary',userRoutes)
+app.use('/api/v1/mylibrary', require('./routes/userRoutes'))
+app.use('/api/v1/mylibrary/books', require('./routes/bookRoutes'))
 
 app.get('/', (req, res) => {
     res.send("Home route")
