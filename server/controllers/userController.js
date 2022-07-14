@@ -74,12 +74,16 @@ const loginUser = async (req, res) => {
 
 // view my profile
 const getMyProfile = async (req, res) => {
-    try {
-        const userDetails = await User.findById(req.user.id)
-        console.log(userDetails._id)
 
+    try {
+
+        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+        const userDetails = await User.findById(req.user.id)
+        
         const test = await Test.find({user: req.user.id})
 
+        // Though this check below is not necessary because i am getting your id from the token being sent to you but then i would stil leave it there
+        // for reference sake
         if(!mongoose.Types.ObjectId.isValid(userDetails._id.toString())) return res.status(404).json({Err: "No such user found"})
 
         res.status(200).json({
@@ -96,9 +100,12 @@ const updateMyprofile = async (req, res) => {
 
     const userId = req.params.id
     try {
+
+        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+        const signedInUserId = await User.findById(req.user.id)
+
         if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({Err: "No such user found"})
 
-        const signedInUserId = await User.findById(req.user.id)
         if(userId !== signedInUserId._id.toString()) return res.status(401).json({Msg: "Not authorized"})
 
         const updatedProfile = await User.findOneAndUpdate({_id: userId}, {
@@ -116,9 +123,12 @@ const deleteMyProfile = async (req, res) => {
 
     const userId = req.params.id
     try {
+
+        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+        const signedInUserId = await User.findById(req.user.id)
+
         if(!mongoose.Types.ObjectId.isValid(userId)) return res.status(404).json({Err: "No such user found"})
 
-        const signedInUserId = await User.findById(req.user.id)
         if(userId !== signedInUserId._id.toString()) return res.status(401).json({Msg: "Not authorized"})
 
         await User.findOneAndDelete({_id: userId})
