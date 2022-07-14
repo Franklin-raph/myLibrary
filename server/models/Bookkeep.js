@@ -38,6 +38,14 @@ const BookKeepingSchema = mongoose.Schema({
         }
     }
 ],
+    followers: [
+            {
+            user:{
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'users'
+            }
+        }
+    ],
     comments: [
         {
           user:{
