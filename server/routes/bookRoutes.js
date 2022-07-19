@@ -4,7 +4,8 @@ const {
         createBook, 
         getAllBooks,
         updateMyBook,
-        deleteMyBook} = require('../controllers/bookkeepController')
+        deleteMyBook,
+        likeBook} = require('../controllers/bookkeepController')
 
 const router = express.Router()
 
@@ -27,6 +28,11 @@ router.patch('/updatebook/:id', protectedRoute, updateMyBook)
 // @route /api/v1/mylibrary/user/update/:id
 // Desc: (PRIVATE) a patch request to update my books
 router.delete('/deletebook/:id', protectedRoute, deleteMyBook)
+
+// DELETE my book
+// @route /api/v1/mylibrary/user/update/:id
+// Desc: (PRIVATE) a patch request to update my books
+router.patch('/likebook/:id', protectedRoute, likeBook)
 
 
 
