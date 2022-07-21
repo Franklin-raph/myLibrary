@@ -32,7 +32,7 @@ router.delete('/deletebook/:id', protectedRoute, deleteMyBook)
 // DELETE my book
 // @route /api/v1/mylibrary/user/update/:id
 // Desc: (PRIVATE) a patch request to update my books
-router.patch('/likebook/:id', protectedRoute, likeBook)
+router.put('/likebook/:id', protectedRoute, likeBook)
 
 
 
