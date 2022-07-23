@@ -141,13 +141,45 @@ const deleteMyProfile = async (req, res) => {
 
 // view all users
 const getAllUsers = async (req, res) => {
+
     try {
         const allUsers = await User.find().sort({createdAt: -1})
-        res.status(200).json(allUsers)
+        res.status(200).json({allUsers})
     } catch (error) {
         res.status(500).json({Err: error.message})
     }
 }
+
+const viewAUsersProfile = async (req, res) => {
+
+    const id = req.params.id
+
+    try {
+
+        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+        const signedInUserId = await User.findById(req.user.id)
+
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such user found"})
+
+        const userProfile = await User.findById(id)
+        if(!userProfile) return res.status(404).json({Msg: "User not found"})
+        
+        res.status(200).json({userProfile})
+    } catch (error) {
+        res.status(500).json({Err: error.message})
+    }
+}
+
+// const followAndUnfollowUser = (req, res) => {
+//     try {
+//         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+//         const signedInUser = await User.findById(req.user.id)
+
+
+//     } catch (error) {
+        // res.status(500).json({Err: error.message})
+//     }
+// }
 
 module.exports = {
     registerUser,
@@ -155,5 +187,6 @@ module.exports = {
     getMyProfile,
     updateMyprofile,
     deleteMyProfile,
-    getAllUsers
+    getAllUsers,
+    viewAUsersProfile
 }

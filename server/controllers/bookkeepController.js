@@ -29,17 +29,18 @@ const updateMyBook = async (req, res) => {
 
         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
 
-        const signedInUserId = await User.findById(req.user.id)
+        const signedInUser = await User.findById(req.user.id)
 
-        const postedBookId = await Test.findById(req.params.id)
+        const postedBookData = await Test.findById(req.params.id)
 
-        if(postedBookId === null) return res.status(404).json({Msg: "Book not found"})
+        // if(postedBookData === null) return res.status(404).json({Msg: "Book not found"})
+        if(!postedBookData) return res.status(400).json({Msg: "No such book found"})
 
-        if(signedInUserId._id.toString() !== postedBookId.user.toString()) return res.status(401).json({Msg: "User not authorized"})
+        if(signedInUser._id.toString() !== postedBookData.user.toString()) return res.status(401).json({Msg: "User not authorized"})
 
-        if(!mongoose.Types.ObjectId.isValid(postedBookId)) return res.status(404).json({Err: "No such book found"})
+        if(!mongoose.Types.ObjectId.isValid(postedBookData)) return res.status(404).json({Err: "No such book found"})
 
-        const updatedBook = await Test.findOneAndUpdate({_id: postedBookId}, {
+        const updatedBook = await Test.findOneAndUpdate({_id: postedBookData}, {
             ...req.body
         })
         res.status(200).json(updatedBook)
@@ -57,11 +58,12 @@ const deleteMyBook = async (req, res) =>{
         
         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
 
-        const signedInUserId = await User.findById(req.user.id)
+        const signedInUser = await User.findById(req.user.id)
 
-        const postedBookId = await Test.findById(req.params.id)
+        const postedBookData = await Test.findById(req.params.id)
+        if(!postedBookData) return res.status(400).json({Msg: "No such book found"})
 
-        if(signedInUserId._id.toString() !== postedBookId.user.toString()) return res.status(401).json({Msg: "User not authorized"})
+        if(signedInUser._id.toString() !== postedBookData.user.toString()) return res.status(401).json({Msg: "User not authorized"})
 
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such book found"})
 
@@ -73,30 +75,29 @@ const deleteMyBook = async (req, res) =>{
     }
 }
 
-// like book
-const likeBook = async (req, res) => {
+// like and dislike book
+const likeAndDislikeBook = async (req, res) => {
     const { id } = req.params
     try {
 
         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
 
-        const signedInUserId = (await User.findById(req.user.id))._id.toString()
-        console.log(signedInUserId)
+        const signedInUser = (await User.findById(req.user.id))._id.toString()
 
         const postedBookData = await Test.findById(req.params.id)
-        console.log(id)
 
         if(postedBookData === null) return res.status(404).json({Msg: "Book not found"})
 
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such book found"})
 
-        if(postedBookData.likes.filter(like => like.user.toString() === signedInUserId).length > 0){
-            const removeIndex = postedBookData.likes.map(like => like.user.toString()).indexOf(signedInUserId)
+        if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length > 0){
+            const removeIndex = postedBookData.likes.map(like => like.user.toString()).indexOf(signedInUser)
             postedBookData.likes.splice(removeIndex, 1)
             await postedBookData.save()
             return res.status(200).json({postedBookData, msg:"Book has been unliked"})
-        }else if(postedBookData.likes.filter(lik => lik.user.toString() === signedInUserId).length === 0){
-            postedBookData.likes.unshift({user: signedInUserId})
+
+        }else if(postedBookData.likes.filter(lik => lik.user.toString() === signedInUser).length === 0){
+            postedBookData.likes.unshift({user: signedInUser})
             await postedBookData.save()
             return res.status(200).json({postedBookData, msg:"Book has been liked"})
         }
@@ -105,10 +106,13 @@ const likeBook = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     createBook,
     getAllBooks,
     updateMyBook,
     deleteMyBook,
-    likeBook
+    likeAndDislikeBook,
+
 }
