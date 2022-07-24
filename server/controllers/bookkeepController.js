@@ -96,7 +96,7 @@ const likeAndDislikeBook = async (req, res) => {
             await postedBookData.save()
             return res.status(200).json({postedBookData, msg:"Book has been unliked"})
 
-        }else if(postedBookData.likes.filter(lik => lik.user.toString() === signedInUser).length === 0){
+        }else if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length === 0){
             postedBookData.likes.unshift({user: signedInUser})
             await postedBookData.save()
             return res.status(200).json({postedBookData, msg:"Book has been liked"})

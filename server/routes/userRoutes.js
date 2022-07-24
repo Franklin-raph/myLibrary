@@ -6,7 +6,8 @@ const { registerUser,
         getAllUsers,
         updateMyprofile,
         deleteMyProfile,
-        viewAUsersProfile} = require('../controllers/userController')
+        viewAUsersProfile,
+        followAndUnfollowUser} = require('../controllers/userController')
 
 const router = express.Router()
 
@@ -39,6 +40,11 @@ router.get('/allusers/user/:id', protectedRoute, viewAUsersProfile)
 // @route /api/v1/mylibrary/user/update/me
 // Desc: (PRIVATE) a patch request to update my data
 router.patch('/user/update/me/:id', protectedRoute, updateMyprofile)
+
+// UPDATE my profile
+// @route /api/v1/mylibrary/user/follow/:id
+// Desc: (PRIVATE) a patch request to follow a user
+router.patch('/user/follow/:followedUserId', protectedRoute, followAndUnfollowUser)
 
 // DELETE my profile
 // @route /api/v1/mylibrary/user/update/me

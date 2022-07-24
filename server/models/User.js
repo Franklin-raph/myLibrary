@@ -15,7 +15,9 @@ const UserSchema = mongoose.Schema({
     },
     avatar: {
         type: String
-    }
+    },
+    followers: [String],
+    following: [String],
 },{timeStapms: true})
 
 module.exports = mongoose.model('User', UserSchema)
