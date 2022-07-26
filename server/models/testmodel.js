@@ -16,6 +16,14 @@ const TestSchema = mongoose.Schema({
         }
     }
 ],
+    bookRequest: [
+        {
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    }
+],
 
 })
 

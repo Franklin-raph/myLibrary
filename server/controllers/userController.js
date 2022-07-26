@@ -186,7 +186,7 @@ const followAndUnfollowUser = async (req, res) => {
         if(!mongoose.Types.ObjectId.isValid(followedUserId)) return res.status(404).json({Err: "No such user found"})
 
         // checking if the users id is mine so i can'nt follow my self 
-        if(followedUserId === signedInUser._id.toString()) return res.status(404).json({Msg: "User can not follow him or her self"})
+        if(followedUserId === signedInUser._id.toString()) return res.status(401).json({Msg: "User can not follow him or her self"})
 
         if(signedInUser.following.includes(followedUserId)){
             signedInUser = await User.findByIdAndUpdate(req.user._id, { $pull:{ following:followedUserId }}, { new:true })
@@ -213,5 +213,5 @@ module.exports = {
     deleteMyProfile,
     getAllUsers,
     viewAUsersProfile,
-    followAndUnfollowUser
+    followAndUnfollowUser,
 }

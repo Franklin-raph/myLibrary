@@ -5,19 +5,31 @@ const {
         getAllBooks,
         updateMyBook,
         deleteMyBook,
-        likeAndDislikeBook} = require('../controllers/bookkeepController')
+        likeAndDislikeBook,
+        viewSingleBook,
+        bookRequest} = require('../controllers/bookkeepController')
 
 const router = express.Router()
 
-// POST a test data
+// POST a book
 // @route /api/v1/mylibrary/postbook
 // Desc: (PRIVATE) a post request for posting a book
 router.post('/postbook', protectedRoute, createBook)
 
-// GET all test
+// GET all books
 // @route /api/v1/mylibrary/allbooks
 // Desc: (PRIVATE) a get request for getting all books
 router.get('/allbooks', protectedRoute, getAllBooks)
+
+// GET a single book
+// @route /api/v1/mylibrary/book/:id
+// Desc: (PRIVATE) a get request for getting a single book
+router.get('/:bookId', protectedRoute, viewSingleBook)
+
+// POST a book request
+// @route /api/v1/mylibrary/book/requestbook/:bookid
+// Desc: (PRIVATE) a get request for getting a single book
+router.patch('/requestbook/:bookId', protectedRoute, bookRequest)
 
 // UPDATE my book
 // @route /api/v1/mylibrary/books/updatebook/:id
