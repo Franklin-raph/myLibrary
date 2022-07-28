@@ -43,3 +43,5 @@
 // });
 // console.log('This happens first');
 
+let tags = "qwer, wert, ioioitir, jgkkfk"
+console.log(tags.split(","))

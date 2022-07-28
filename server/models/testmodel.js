@@ -4,6 +4,7 @@ const TestSchema = mongoose.Schema({
     title: {
         type: String
     },
+    tags :[String],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

@@ -6,8 +6,8 @@ const { registerUser,
         getAllUsers,
         updateMyprofile,
         deleteMyProfile,
-        viewAUsersProfile,
-        followAndUnfollowUser,} = require('../controllers/userController')
+        viewAUsersProfile,} = require('../controllers/userController')
+const { followAndUnfollowUser } = require('../controllers/followUserAndUnfollow')
 
 const router = express.Router()
 

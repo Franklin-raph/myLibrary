@@ -6,6 +6,7 @@ const mongoose  = require('mongoose')
 const createBook = async (req, res) => {
     const test = await Test.create({
         title: req.body.title,
+        tags: req.body.tags.split(",").map(tag => tag.trim()),
         user: req.user.id
     })
     res.status(201).json(test)
@@ -91,77 +92,10 @@ const viewSingleBook = async (req, res) => {
     }
 }
 
-
-// like and dislike book
-const likeAndDislikeBook = async (req, res) => {
-    const { id } = req.params
-    try {
-
-        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
-
-        const signedInUser = (await User.findById(req.user.id))._id.toString()
-
-        const postedBookData = await Test.findById(req.params.id)
-
-        if(postedBookData === null) return res.status(404).json({Msg: "Book not found"})
-
-        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such book found"})
-
-        if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length > 0){
-            const removeIndex = postedBookData.likes.map(like => like.user.toString()).indexOf(signedInUser)
-            postedBookData.likes.splice(removeIndex, 1)
-            await postedBookData.save()
-            return res.status(200).json({postedBookData, msg:"Book has been unliked"})
-
-        }else if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length === 0){
-            postedBookData.likes.unshift({user: signedInUser})
-            await postedBookData.save()
-            return res.status(200).json({postedBookData, msg:"Book has been liked"})
-        }
-    } catch (error) {
-        res.status(500).json({Err: error.message})
-    }
-}
-
-
-// book request
-const bookRequest = async (req, res) =>{
-
-    const { bookId } = req.params
-    try {
-        if(!mongoose.Types.ObjectId.isValid(bookId)) return res.status(404).json({Err: "No such book found"})
-
-        const signedInUser = (await User.findById(req.user.id))
-
-        const requestedBook = await Test.findById(bookId)
-        console.log(requestedBook)
-
-        if(requestedBook.user.toString() === signedInUser._id.toString()) return res.status(401).json({Msg: "User can not request a book from him/her self"})
-        
-        if(!requestedBook) return res.status(404).json({Msg: "Book not found"})
-
-        if(requestedBook.bookRequest.filter(book => book.user.toString() === signedInUser._id.toString()).length > 0) return res.status(401).json({Msg: "Can't raquest for a book more than once"})
-
-        if(requestedBook.bookRequest.filter(book => book.user.toString() === signedInUser).length === 0){
-            requestedBook.bookRequest.unshift({user: signedInUser})
-            await requestedBook.save()
-            return res.status(200).json({requestedBook, msg: "Book has been requested"})
-        }
-
-        res.status(200).json(requestedBook)
-
-    } catch (error) {
-        res.status(500).json(error.message)
-    }
-}
-
-
 module.exports = {
     createBook,
     getAllBooks,
     updateMyBook,
     deleteMyBook,
-    likeAndDislikeBook,
     viewSingleBook,
-    bookRequest
 }
