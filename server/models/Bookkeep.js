@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const userSchema = require('./user')
 
 const BookKeepingSchema = mongoose.Schema({
     user:{
@@ -26,9 +25,6 @@ const BookKeepingSchema = mongoose.Schema({
     bookGenre: {
         type: String,
         required: true
-    },
-    bookCoverPhoto: {
-        type: String
     },
     likes: [
         {

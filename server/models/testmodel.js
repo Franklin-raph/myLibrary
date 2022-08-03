@@ -1,19 +1,38 @@
 const mongoose = require('mongoose')
 
 const TestSchema = mongoose.Schema({
-    title: {
-        type: String
-    },
-    tags :[String],
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    title: {
+        type: String
+    },
+    tags :[String],
     likes: [
         {
           user:{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
+        }
+    }
+],
+    comments: [
+        {
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'users'
+        },
+        name:{
+            type:String,
+        },
+        text: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            default: Date.now()
         }
     }
 ],

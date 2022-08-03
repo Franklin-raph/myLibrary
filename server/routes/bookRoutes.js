@@ -8,6 +8,7 @@ const {
         viewSingleBook,} = require('../controllers/bookkeepController')
 const { bookRequest } = require('../controllers/bookRequest')
 const { likeAndDislikeBook } = require('../controllers/likeAnsDislikeBook')
+const { createComment, deleteMyComment } = require('../controllers/comments')
 
 const router = express.Router()
 
@@ -29,7 +30,7 @@ router.get('/:bookId', protectedRoute, viewSingleBook)
 // POST a book request
 // @route /api/v1/mylibrary/book/requestbook/:bookid
 // Desc: (PRIVATE) a get request for getting a single book
-router.patch('/requestbook/:bookId', protectedRoute, bookRequest)
+router.patch('/requestbook/:bookId', protectedRoute, bookRequest) //not implemented yet
 
 // UPDATE my book
 // @route /api/v1/mylibrary/books/updatebook/:id
@@ -45,6 +46,16 @@ router.delete('/deletebook/:id', protectedRoute, deleteMyBook)
 // @route /api/v1/mylibrary/user/update/:id
 // Desc: (PRIVATE) a patch request to update my books
 router.put('/likebook/:id', protectedRoute, likeAndDislikeBook)
+
+// POST a book request
+// @route /api/v1/mylibrary/book/requestbook/:bookid
+// Desc: (PRIVATE) a get request for getting a single book
+router.post('/comment/:bookId', protectedRoute, createComment)
+
+// POST a book request
+// @route /api/v1/mylibrary/book/requestbook/:bookid
+// Desc: (PRIVATE) a get request for getting a single book
+router.delete('/comment/:bookId/:comment_id', protectedRoute, deleteMyComment)
 
 
 module.exports = router

@@ -18,8 +18,12 @@ const likeAndDislikeBook = async (req, res) => {
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such book found"})
 
         if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length > 0){
-            const removeIndex = postedBookData.likes.map(like => like.user.toString()).indexOf(signedInUser)
+            const removeIndex = postedBookData.likes
+                .map(like => like.user.toString())
+                .indexOf(signedInUser)
+
             postedBookData.likes.splice(removeIndex, 1)
+            
             await postedBookData.save()
             return res.status(200).json({postedBookData, msg:"Book has been unliked"})
 
