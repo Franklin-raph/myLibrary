@@ -1,4 +1,4 @@
-const Test = require('../models/testmodel')
+const Book = require('../models/Bookkeep')
 const User = require('../models/User')
 const mongoose  = require('mongoose')
 
@@ -10,10 +10,9 @@ const bookRequest = async (req, res) =>{
         if(!mongoose.Types.ObjectId.isValid(bookId)) return res.status(404).json({Err: "No such book found"})
 
         const signedInUser = (await User.findById(req.user.id))
-        console.log(signedInUser)
 
-        const requestedBook = await Test.findById(bookId)
-        console.log(requestedBook)
+        const requestedBook = await Book.findById(bookId)
+        if(!requestedBook) return res.status(404).json({Msg: "Book not found"})
 
         if(requestedBook.user.toString() === signedInUser._id.toString()) return res.status(401).json({Msg: "User can not request a book from him/her self"})
         
@@ -30,7 +29,7 @@ const bookRequest = async (req, res) =>{
         res.status(200).json(requestedBook)
 
     } catch (error) {
-        res.status(500).json(error.message)
+        res.status(500).json({ErrMsg: error.message})
     }
 }
 

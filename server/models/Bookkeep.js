@@ -3,14 +3,17 @@ const mongoose = require('mongoose')
 const BookKeepingSchema = mongoose.Schema({
     user:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
+    },
+    comments:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'comments'
     },
     title: {
         type: String,
         required: true
     },
-    auhtor: {
+    author: {
         type: String,
         required: true
     },
@@ -30,23 +33,15 @@ const BookKeepingSchema = mongoose.Schema({
         {
           user:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'users'
+            ref: 'User'
         }
     }
 ],
-    followers: [
-            {
-            user:{
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'users'
-            }
-        }
-    ],
     comments: [
         {
           user:{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'users'
+            ref: 'User'
         },
         text: {
             type: String,
@@ -55,6 +50,14 @@ const BookKeepingSchema = mongoose.Schema({
         date: {
             type: Date,
             default: Date.now()
+        }
+    }
+],
+    bookRequest: [
+        {
+        user:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
         }
     }
 ],

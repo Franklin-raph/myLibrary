@@ -1,10 +1,6 @@
 const mongoose = require('mongoose')
 
 const TestSchema = mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
     title: {
         type: String
     },

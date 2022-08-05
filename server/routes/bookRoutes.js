@@ -22,15 +22,15 @@ router.post('/postbook', protectedRoute, createBook)
 // Desc: (PRIVATE) a get request for getting all books
 router.get('/allbooks', protectedRoute, getAllBooks)
 
+// // GET all comments
+// // @route /api/v1/mylibrary/allcomments
+// // Desc: (PRIVATE) a get request for getting all comments
+// router.get('/allcomments', protectedRoute, viewAllComments)
+
 // GET a single book
-// @route /api/v1/mylibrary/book/:id
+// @route /api/v1/mylibrary/books/:bookId
 // Desc: (PRIVATE) a get request for getting a single book
 router.get('/:bookId', protectedRoute, viewSingleBook)
-
-// POST a book request
-// @route /api/v1/mylibrary/book/requestbook/:bookid
-// Desc: (PRIVATE) a get request for getting a single book
-router.patch('/requestbook/:bookId', protectedRoute, bookRequest) //not implemented yet
 
 // UPDATE my book
 // @route /api/v1/mylibrary/books/updatebook/:id
@@ -38,24 +38,29 @@ router.patch('/requestbook/:bookId', protectedRoute, bookRequest) //not implemen
 router.patch('/updatebook/:id', protectedRoute, updateMyBook)
 
 // DELETE my book
-// @route /api/v1/mylibrary/user/update/:id
+// @route /api/v1/mylibrary/books/deletebook/:id
 // Desc: (PRIVATE) a patch request to update my books
 router.delete('/deletebook/:id', protectedRoute, deleteMyBook)
 
-// DELETE my book
-// @route /api/v1/mylibrary/user/update/:id
-// Desc: (PRIVATE) a patch request to update my books
+// POST a book request
+// @route /api/v1/mylibrary/books/requestbook/:bookid
+// Desc: (PRIVATE) a get request for getting a single book
+router.patch('/requestbook/:bookId', protectedRoute, bookRequest) //not implemented yet
+
+// UPDATE my book
+// @route /api/v1/mylibrary/books/likebook/:id
+// Desc: (PRIVATE) a put request to update my books
 router.put('/likebook/:id', protectedRoute, likeAndDislikeBook)
 
-// POST a book request
-// @route /api/v1/mylibrary/book/requestbook/:bookid
+// POST a comment
+// @route /api/v1/mylibrary/books/comment/:bookId
 // Desc: (PRIVATE) a get request for getting a single book
-router.post('/comment/:bookId', protectedRoute, createComment)
+router.patch('/comment/:bookId', protectedRoute, createComment)
 
-// POST a book request
-// @route /api/v1/mylibrary/book/requestbook/:bookid
+// DELETE a book comment
+// @route /api/v1/mylibrary/books/comment/:bookId/:comment_id
 // Desc: (PRIVATE) a get request for getting a single book
-router.delete('/comment/:bookId/:comment_id', protectedRoute, deleteMyComment)
+router.delete('/comment/:bookId/:commentId', protectedRoute, deleteMyComment)
 
 
 module.exports = router
