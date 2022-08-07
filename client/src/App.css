@@ -1,0 +1,145 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', 'Fredoka';
+}
+
+body{
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+a{
+    text-decoration: none;
+}
+
+.activeNav{
+    color: rgb(0, 187, 109);
+}
+
+.bottomNav{
+    position: fixed;
+    bottom: 0;
+    background-color: #e4e4e4;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bottomNav i{
+    font-size: 22px;
+}
+
+.navLink{
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(29, 27, 27);
+}
+
+*:focus {
+    outline: none; /*This removes the outline when u click on the input box*/
+  }
+
+.login-fields{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 3px 3px 7px rgb(206, 206, 206);
+    max-width: 90%;
+    margin: 10rem auto 2rem;
+    padding-bottom: 2rem;
+}
+
+.signup-fields{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 3px 3px 7px rgb(206, 206, 206);
+  max-width: 90%;
+  margin: 3rem auto 2rem;
+  padding-bottom: 2rem;
+}
+  
+.login-fields h1, .signup-fields h1 {
+    margin: 2rem;
+    font-weight: 500;
+    font-size: 28px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    padding: 4px;
+    width: 75%;
+    height: 32px;
+    border: none;
+    border-bottom: 1px solid #AAA;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: .9rem;
+    transition: 0.2s ease;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-bottom: 2px solid #16a085;
+    color: #16a085;
+    transition: 0.2s ease;
+  }
+  
+  input[type="submit"] {
+    margin-top: 20px;
+    width: 150px;
+    height: 32px;
+    background: #16a085;
+    border: none;
+    border-radius: 2px;
+    color: #FFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 0.1s ease;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+  }
+  
+  input[type="submit"]:hover,
+  input[type="submit"]:focus {
+    opacity: 0.8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+  }
+  
+  input[type="submit"]:active {
+    opacity: 1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+  }
+  
+  
+  /* @media screen and (max-width:700px) {
+      #signup-box {
+          width: 350px;
+        }
+  }
+  
+  @media screen and (max-width:320px) {
+      #signup-box {
+          width: 300px;
+        }
+  } */
