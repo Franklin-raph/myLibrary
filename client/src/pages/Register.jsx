@@ -8,6 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [error, setError] = useState(false)
+  const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const navigate = useNavigate()
 
   const handleRegister = async (e) => {
@@ -18,7 +19,22 @@ const Register = () => {
       setError("Please Validate all fields")
       setTimeout(() => {
         setError(false)
-      },5000)
+      },3500)
+    }else if(!emailRegEx.test(email)){
+      setError("Please Enter a valid email address")
+      setTimeout(() => {
+        setError(false)
+      },3500)
+    }else if(password !== confirmPassword){
+      setError("Password fields do not match")
+      setTimeout(() => {
+        setError(false)
+      },3500)
+    }else if(password.length !== 6){
+      setError("Password length must be at least 6 characters")
+      setTimeout(() => {
+        setError(false)
+      },3500)
     }else{
       const response = await fetch('http://localhost:8000/api/v1/mylibrary/auth/signup', {
       method: 'POST',
@@ -35,7 +51,7 @@ const Register = () => {
 
           setTimeout(() => {
             setError(false)
-          },5000)
+          },3500)
           
       }else{
         navigate('/')
