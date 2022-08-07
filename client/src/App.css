@@ -55,7 +55,7 @@ a{
     text-align: center;
     box-shadow: 3px 3px 7px rgb(206, 206, 206);
     max-width: 90%;
-    margin: 10rem auto 2rem;
+    margin: 6rem auto 2rem;
     padding-bottom: 2rem;
 }
 
@@ -67,14 +67,30 @@ a{
   text-align: center;
   box-shadow: 3px 3px 7px rgb(206, 206, 206);
   max-width: 90%;
-  margin: 3rem auto 2rem;
-  padding-bottom: 2rem;
+  margin: 3rem auto 6rem;
+  padding: 0 5px 2rem 5px;
+}
+
+.login-fields p:nth-child(4), .signup-fields p:nth-child(6){
+  margin: auto 1.5rem;
+}
+
+.signup-fields p:nth-child(){
+  margin: auto 1.5rem;
 }
   
 .login-fields h1, .signup-fields h1 {
-    margin: 2rem;
+    margin: 2rem 2rem 1rem;
     font-weight: 500;
     font-size: 28px;
+  }
+
+  .inputParent{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
   }
   
   input[type="text"],
@@ -82,15 +98,14 @@ a{
   input[type="password"] {
     display: block;
     box-sizing: border-box;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     padding: 4px;
-    width: 75%;
-    height: 32px;
+    width: 90%;
+    height: 3rem;
     border: none;
     border-bottom: 1px solid #AAA;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: .9rem;
+    font-weight: 600;
+    font-size: 1rem;
     transition: 0.2s ease;
   }
   
@@ -105,8 +120,8 @@ a{
   input[type="submit"] {
     margin-top: 20px;
     width: 150px;
-    height: 32px;
-    background: #16a085;
+    height: 35px;
+    background: #18E29F;
     border: none;
     border-radius: 2px;
     color: #FFF;
@@ -131,15 +146,13 @@ a{
     transition: 0.1s ease;
   }
   
-  
-  /* @media screen and (max-width:700px) {
-      #signup-box {
-          width: 350px;
-        }
-  }
-  
-  @media screen and (max-width:320px) {
-      #signup-box {
-          width: 300px;
-        }
-  } */
+
+
+.errorAlert {
+  color: #bd0716;
+  background-color: #f8d7da7a;
+  border: 2px solid #f5c2c7;
+  border-radius: 5px;
+  padding: 10px 16px;
+  /* margin-bottom: 1.5rem; */
+}

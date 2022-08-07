@@ -18,11 +18,11 @@ const registerUser = async (req, res) => {
 
     try {
         // checking if user already exists
-        let userEmail = await User.findOne({email})
-        if(userEmail) return res.status(400).json({msg:"User with this email already exists"})
-
         let userName = await User.findOne({name})
         if(userName) return res.status(400).json({msg:"User with this name already exists"})
+
+        let userEmail = await User.findOne({email})
+        if(userEmail) return res.status(400).json({msg:"User with this email already exists"})
 
         // creating a default avatar image
         const avatar = gravatar.url(email, {
