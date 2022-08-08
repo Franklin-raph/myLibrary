@@ -25,7 +25,7 @@ router.get('/allbooks', getAllBooks)
 // GET a single book
 // @route /api/v1/mylibrary/books/:bookId
 // Desc: (PRIVATE) a get request for getting a single book
-router.get('/:bookId', protectedRoute, viewSingleBook)
+router.get('/:bookId', viewSingleBook)
 
 // UPDATE my book
 // @route /api/v1/mylibrary/books/updatebook/:id
