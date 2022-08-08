@@ -5,9 +5,11 @@ const BookKeepingSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    comments:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'comments'
+    userName:{
+        type: String
+    },
+    avatar:{
+        type: String,
     },
     title: {
         type: String,

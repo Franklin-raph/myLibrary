@@ -11,6 +11,8 @@ const createBook = async (req, res) => {
         author: req.body.author,
         tags: req.body.tags.split(",").map(tag => tag.trim()),
         user: req.user.id,
+        userName: req.user.name,
+        avatar: req.user.avatar,
         publishedDate: req.body.publishedDate,
         description: req.body.description,
         bookGenre: req.body.bookGenre,
@@ -21,8 +23,9 @@ const createBook = async (req, res) => {
 // view all Books
 const getAllBooks = async (req, res) => {
     try {
-        const allBook = await Book.find().sort({ createdAt: -1 })
-        res.status(200).json(allBook)
+        const allBooks = await Book.find().sort({ createdAt: -1 })
+
+        res.status(200).json(allBooks)
     } catch (error) {
         res.status(500).json({Err: error.message})
     }
@@ -95,6 +98,7 @@ const viewSingleBook = async (req, res) => {
         // console.log(comment)
         // if(!comment) return res.status(404).json({Msg: "No comments for this book"})
 
+        console.log(typeof book.user)
         const bookWasPostedBy = await User.findById(book.user.toString()).select('-password')
         // if(!bookWasPostedBy) return res.status(404).json({Msg: "No User"})
         
