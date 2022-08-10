@@ -156,15 +156,15 @@ const viewAUsersProfile = async (req, res) => {
 
     try {
 
-        if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
-        const signedInUserId = await User.findById(req.user.id)
+        // if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
+        // const signedInUserId = await User.findById(req.user.id)
 
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such user found"})
 
-        const userProfile = await User.findById(id)
+        const userProfile = await User.findById(id).select('-password')
         if(!userProfile) return res.status(404).json({Msg: "User not found"})
         
-        res.status(200).json({userProfile})
+        res.status(200).json(userProfile)
     } catch (error) {
         res.status(500).json({Err: error.message})
     }

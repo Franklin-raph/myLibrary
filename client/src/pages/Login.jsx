@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import ErrorMsg from '../components/ErrorMsg'
+import { useSelector, useDispatch } from 'react-redux'
+import { LOGIN } from '../redux/userSlice'
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
   const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+
+  // const user = useSelector(state => state.user)
+  // console.log(user)
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -28,6 +35,8 @@ const Login = () => {
 
     }else{
       navigate('/')
+      localStorage.setItem('signedInuser',JSON.stringify(data))
+      dispatch(LOGIN(data))
       console.log(data)
     }
   }

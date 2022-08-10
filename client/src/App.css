@@ -286,4 +286,8 @@ a{
   padding: 1rem;
   border-top: 1px solid #fff;
 }
+
+.userDashboardContainer, .userProfile, .singleUserProfile{
+  margin: 3.2rem 0 4rem;
+}
 /* https://www.youtube.com/watch?v=FLt2TveqHQM */

@@ -24,7 +24,7 @@ router.post('/auth/signin', loginUser)
 // GET my profile
 // @route /api/v1/mylibrary/user/me
 // Desc: (PRIVATE) a get request for getting my data
-router.get('/user/me', protectedRoute, getMyProfile)
+router.get('/user/me', getMyProfile)
 
 // GET all users
 // @route /api/v1/mylibrary/allusers
@@ -34,7 +34,7 @@ router.get('/allusers', protectedRoute, getAllUsers)
 // GET a user
 // @route /api/v1/mylibrary/allusers/user/:id
 // Desc: (PRIVATE) a get request for getting a user
-router.get('/allusers/user/:id', protectedRoute, viewAUsersProfile)
+router.get('/allusers/user/:id', viewAUsersProfile)
 
 // UPDATE my profile
 // @route /api/v1/mylibrary/user/update/me
