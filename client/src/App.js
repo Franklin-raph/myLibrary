@@ -9,12 +9,18 @@ import BookDetailsPage from './pages/BookDetailsPage';
 import UserDashboard from './pages/UserDashboard';
 import UserProfile from './pages/UserProfile';
 import SingleUserProfile from './pages/SingleUserProfile';
+import InitialTopNav from './components/InitialTopNav';
+import { useSelector } from 'react-redux'
 
 function App() {
+
+  const user = useSelector(state => state.user)
+  console.log(user)
+
   return (
       <>
         <BrowserRouter>
-          <TopNav />
+          {user ? <TopNav /> : <InitialTopNav />}
           <Routes >
               <Route path='/' element={<Home />} />
               <Route path='/loginuser' element={<Login />} />

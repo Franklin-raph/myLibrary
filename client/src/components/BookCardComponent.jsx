@@ -13,6 +13,7 @@ const BookCardComponent = ({aBook}) => {
 
   return (
     <div>
+      <div className='hr'></div>
       <div data-aos="fade-up" className='singleBookCard'>
           <div className="userAndBookInfo">
             <div className="nameAndAvatar">

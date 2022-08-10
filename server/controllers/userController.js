@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const Test = require('../models/testmodel')
+const Book = require('../models/Bookkeep')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const gravatar = require('gravatar')
@@ -75,19 +75,20 @@ const loginUser = async (req, res) => {
 // view my profile
 const getMyProfile = async (req, res) => {
 
+    
     try {
 
         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
         const userDetails = await User.findById(req.user.id)
         
-        const test = await Test.find({user: req.user.id})
+        const mybBooks = await Book.find({user: req.user.id})
 
         // Though this check below is not necessary because i am getting your id from the token being sent to you but then i would stil leave it there
         // for reference sake
         if(!mongoose.Types.ObjectId.isValid(userDetails._id.toString())) return res.status(404).json({Err: "No such user found"})
 
         res.status(200).json({
-            userDetails, test
+            userDetails, mybBooks
         })
     } catch (error) {
         console.log(error)

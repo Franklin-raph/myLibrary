@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const TopNav = () => {
+const InitialTopNav = () => {
 
   const user = useSelector(state => state.user)
   console.log(user)
@@ -10,11 +10,10 @@ const TopNav = () => {
 
   return (
     <div className='topNav'>
-        <i className="ri-search-line"></i>
         <div>Book Share</div>
         {/* <img src={user.value.user.avatar} alt="user" /> */}
     </div>
   )
 }
 
-export default TopNav
+export default InitialTopNav

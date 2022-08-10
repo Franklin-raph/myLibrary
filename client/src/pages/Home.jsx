@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import {useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import BookCardComponent from '../components/BookCardComponent'
 import CarouselComponent from '../components/CarouselComponent'
 
 const Home = () => {
   const [allBooks, setAllBooks] = useState([])
+  const navigate = useNavigate()
+  const user = useSelector(state => state.user)
+  console.log(user)
 
-  useEffect(() => {fetchAllBooks()},[])
+  useEffect(() => {
+    if(user.value === null){
+      navigate('/loginuser')
+    }
+    console.log((localStorage.getItem('signedInuser')))
+    fetchAllBooks()
+  },[])
+
 
   const fetchAllBooks = async () => {
     const response = await fetch("/api/v1/mylibrary/books/allbooks")
