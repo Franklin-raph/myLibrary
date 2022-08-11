@@ -7,20 +7,25 @@ import CarouselComponent from '../components/CarouselComponent'
 const Home = () => {
   const [allBooks, setAllBooks] = useState([])
   const navigate = useNavigate()
-  const user = useSelector(state => state.user)
-  console.log(user)
 
+  const user = useSelector(state => state.user)
   useEffect(() => {
     if(user.value === null){
       navigate('/loginuser')
+      return
+    }else{
+      fetchAllBooks()
     }
-    console.log((localStorage.getItem('signedInuser')))
-    fetchAllBooks()
   },[])
 
 
   const fetchAllBooks = async () => {
-    const response = await fetch("/api/v1/mylibrary/books/allbooks")
+    const response = await fetch("/api/v1/mylibrary/books/allbooks", {
+      headers: {
+        Authorization: `Bearer ${user.value.token}`
+      }
+    })
+    console.log(response)
     const data = await response.json()
 
     if(response.ok){

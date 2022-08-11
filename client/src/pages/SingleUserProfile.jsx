@@ -1,18 +1,45 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import {useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const SingleUserProfile = () => {
-    let { id } = useParams()
+    let { id } = useParams();
+    const navigate = useNavigate();
+    const [userDetails, setUserDetails] = useState();
+    const user = useSelector(state => state.user)
 
-    useEffect(() => {getUser()},[])
+    useEffect(() => {
+      if(user.value === null){
+        navigate('/loginuser')
+        return
+      }else{
+        getUser()
+      }
+    },[])
 
     const getUser = async () => {
-        const response = await fetch(`/api/v1/mylibrary/allusers/user/${id}`)
+        const response = await fetch(`/api/v1/mylibrary/allusers/user/${id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${user.value.token}`
+          }
+        })
+        console.log(response)
         const data = await response.json()
-        console.log(data)
+        if(response.ok){
+          setUserDetails(data)
+        }else{
+          console.log(response)
+        }
     }
+
+    console.log(userDetails)
+
   return (
-    <div className='singleUserProfile'></div>
+    <div className='singleUserProfile'>
+
+    </div>
   )
 }
 

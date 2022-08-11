@@ -20,12 +20,12 @@ router.post('/postbook', protectedRoute, createBook)
 // GET all books
 // @route /api/v1/mylibrary/allbooks
 // Desc: (PRIVATE) a get request for getting all books
-router.get('/allbooks', getAllBooks)
+router.get('/allbooks', protectedRoute, getAllBooks)
 
 // GET a single book
 // @route /api/v1/mylibrary/books/:bookId
 // Desc: (PRIVATE) a get request for getting a single book
-router.get('/:bookId', viewSingleBook)
+router.get('/:bookId', protectedRoute, viewSingleBook)
 
 // UPDATE my book
 // @route /api/v1/mylibrary/books/updatebook/:id

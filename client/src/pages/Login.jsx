@@ -8,6 +8,7 @@ const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState(false)
+  const [disableBtn, setDisableBtn] = useState(true)
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
@@ -35,9 +36,8 @@ const Login = () => {
 
     }else{
       navigate('/')
-      localStorage.setItem('signedInuser',JSON.stringify(data))
       dispatch(LOGIN(data))
-      console.log(data)
+      localStorage.setItem('signedInuser',JSON.stringify(data))
     }
   }
 

@@ -3,9 +3,6 @@ import { useSelector } from 'react-redux'
 
 const InitialTopNav = () => {
 
-  const user = useSelector(state => state.user)
-  console.log(user)
-
   // if
 
   return (

@@ -18,13 +18,13 @@ const protectedRoute = async (req, res, next) => {
             next()
         }catch(error){
             console.log(error)
-            res.status(401).json({msg:"Not authorized, invalid token"})
+            res.status(401).json({msg:"Not authorized"})
         }
     }
 
     // checking if token is not present
     if(!token){
-        res.status(401).json({msg:"Not authorized, no token present"})
+        res.status(401).json({msg:"Not authorized"})
     }
 }
 

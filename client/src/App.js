@@ -15,12 +15,17 @@ import { useSelector } from 'react-redux'
 function App() {
 
   const user = useSelector(state => state.user)
-  console.log(user)
+  // if(user.value !== null){
+  //   console.log("Present")
+  // }else{
+  //   console.log("Absent")
+  // }
+  // console.log(user)
 
   return (
       <>
         <BrowserRouter>
-          {user ? <TopNav /> : <InitialTopNav />}
+          {user.value ? <TopNav /> : <InitialTopNav />}
           <Routes >
               <Route path='/' element={<Home />} />
               <Route path='/loginuser' element={<Login />} />

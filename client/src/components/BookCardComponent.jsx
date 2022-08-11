@@ -18,7 +18,7 @@ const BookCardComponent = ({aBook}) => {
           <div className="userAndBookInfo">
             <div className="nameAndAvatar">
               <img src={aBook.avatar} alt="User avatar"/>
-              <h4> <Link to={`/user/${aBook.user}`} />{aBook.userName}</h4>
+              <h4> <Link to={`/user/${aBook.user}`} >{aBook.userName}</Link></h4>
             </div>
             <div className='titleAndDescription'>
               <Link to={`/book/${aBook._id}`}>

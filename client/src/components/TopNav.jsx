@@ -6,13 +6,11 @@ const TopNav = () => {
   const user = useSelector(state => state.user)
   console.log(user)
 
-  // if
-
   return (
     <div className='topNav'>
         <i className="ri-search-line"></i>
         <div>Book Share</div>
-        {/* <img src={user.value.user.avatar} alt="user" /> */}
+        <img src={user.value.user.avatar} alt="user" />
     </div>
   )
 }

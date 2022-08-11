@@ -6,8 +6,7 @@ const { registerUser,
         getAllUsers,
         updateMyprofile,
         deleteMyProfile,
-        viewAUsersProfile,
-        getSignedInUsersProfile} = require('../controllers/userController')
+        viewAUsersProfile,} = require('../controllers/userController')
 const { followAndUnfollowUser } = require('../controllers/followUserAndUnfollow')
 
 const router = express.Router()
@@ -27,8 +26,6 @@ router.post('/auth/signin', loginUser)
 // Desc: (PRIVATE) a get request for getting my data
 router.get('/user/me', protectedRoute, getMyProfile)
 
-// router.get(/)
-
 // GET all users
 // @route /api/v1/mylibrary/allusers
 // Desc: (PRIVATE) a get request for getting all users
@@ -37,7 +34,7 @@ router.get('/allusers', protectedRoute, getAllUsers)
 // GET a user
 // @route /api/v1/mylibrary/allusers/user/:id
 // Desc: (PRIVATE) a get request for getting a user
-router.get('/allusers/user/:id', viewAUsersProfile)
+router.get('/allusers/user/:id', protectedRoute, viewAUsersProfile)
 
 // UPDATE my profile
 // @route /api/v1/mylibrary/user/update/me
