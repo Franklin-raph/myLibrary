@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import ErrorMsg from '../components/ErrorMsg'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { LOGIN } from '../redux/userSlice'
 
 const Login = () => {
@@ -50,7 +50,7 @@ const Login = () => {
           <input type="password" name="password" placeholder="Password" onChange={e => setPassword(e.target.value)} value={password} />
                     
           <input type="submit" name="signup_submit" value="Sign in" />
-          <p>Don't have an account? <Link to="/registeruser">Sign up</Link></p>
+          <p>Don't have an account? <br/> <Link to="/registeruser">Sign up</Link></p>
         </div>
     </form>
         

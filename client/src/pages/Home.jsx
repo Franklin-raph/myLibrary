@@ -33,6 +33,8 @@ const Home = () => {
     }
   }
 
+  console.log(allBooks)
+
 
 
   return (

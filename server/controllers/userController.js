@@ -74,22 +74,19 @@ const loginUser = async (req, res) => {
 
 // view my profile
 const getMyProfile = async (req, res) => {
-
     
     try {
 
         if(await User.findById(req.user) === null) return res.status(404).json({Msg: "User not found"})
-        const userDetails = await User.findById(req.user.id)
+        const user = await User.findById(req.user.id)
         
         const mybBooks = await Book.find({user: req.user.id})
 
         // Though this check below is not necessary because i am getting your id from the token being sent to you but then i would stil leave it there
         // for reference sake
-        if(!mongoose.Types.ObjectId.isValid(userDetails._id.toString())) return res.status(404).json({Err: "No such user found"})
+        if(!mongoose.Types.ObjectId.isValid(user._id.toString())) return res.status(404).json({Err: "No such user found"})
 
-        res.status(200).json({
-            userDetails, mybBooks
-        })
+        res.status(200).json(mybBooks)
     } catch (error) {
         console.log(error)
         res.status(500).json({Err: error.message})

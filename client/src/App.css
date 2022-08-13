@@ -2,28 +2,48 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Raleway', 'Fredoka';
+    font-family: 'Raleway', 'Fredoka', sans-serif;
 }
 
-body{
-    overflow-x: hidden;
-    position: relative;
-    width: 100%;
-    background-color: rgb(0, 0, 10);
+:root{
+  --primary-blue: #00438f;
+  --primary-background-color:rgb(0, 0, 10);
+  --primary-light-blue: #0077ff;
 }
+
+html, body{
+  overflow-x: hidden !important;
+  position: relative;
+  width: 100%;
+  background-color: var(--primary-background-color)
+}
+
 
 a{
     text-decoration: none;
 }
 
 .activeNav{
-    color: rgb(0, 187, 109);
+    color: var(--primary-light-blue)
+}
+
+.bottomNav1{
+  position: fixed;
+  bottom: 0;
+  background-color: var(--primary-background-color);
+  border-top: 1px solid rgba(255, 255, 255, 0);
+  padding: 1px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .bottomNav{
     position: fixed;
     bottom: 0;
-    background-color: #e4e4e4;
+    background-color: var(--primary-background-color);
+    border-top: 1px solid #fff;
     padding: 16px 18px;
     display: flex;
     justify-content: space-between;
@@ -31,12 +51,16 @@ a{
     width: 100%;
 }
 
+.bottomNav a{
+  color: #fff;
+}
+
 .bottomNav i{
     font-size: 22px;
 }
 
 .topNav{
-  background-color: #18E29F;
+  background-color: var(--primary-blue);
   text-align: center;
   padding: .6rem 8px;
   font-size: 18px;
@@ -49,6 +73,19 @@ a{
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.topNav1{
+  background-color: var(--primary-blue);
+  text-align: center;
+  padding: .6rem 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 10;
 }
 
 .topNav img{
@@ -72,6 +109,7 @@ a{
 
 *:focus {
     outline: none; /*This removes the outline when u click on the input box*/
+    /* background-color: none; */
   }
 
 .login-fields{
@@ -80,10 +118,18 @@ a{
     justify-content: center;
     align-items: center;
     text-align: center;
-    box-shadow: 3px 3px 7px rgb(206, 206, 206);
+    /* box-shadow: 3px 3px 7px rgb(206, 206, 206); */
+    border: 1px solid #fff;
+    color: #fff;
     max-width: 90%;
     margin: 6rem auto 2rem;
     padding-bottom: 2rem;
+    border-radius: 10px;
+}
+
+.login-fields a, .signup-fields a{
+  color: #fff;
+  text-decoration: underline;
 }
 
 .signup-fields{
@@ -92,10 +138,13 @@ a{
   justify-content: center;
   align-items: center;
   text-align: center;
-  box-shadow: 3px 3px 7px #cecece;
+  /* box-shadow: 3px 3px 7px #cecece; */
+  border: 1px solid #fff;
+  color: #fff;
   max-width: 90%;
   margin: 6rem auto;
   padding: 0 5px 2rem 5px;
+  border-radius: 10px;
 }
 
 .login-fields p:nth-child(4), .signup-fields p:nth-child(6){
@@ -134,21 +183,24 @@ a{
     font-weight: 600;
     font-size: 1rem;
     transition: 0.2s ease;
+    background-color: var(--primary-background-color);
+    color: #fff;
   }
   
   input[type="text"]:focus,
   input[type="email"]:focus,
   input[type="password"]:focus {
-    border-bottom: 2px solid #16a085;
-    color: #16a085;
+    border-bottom: 2px solid var(--primary-blue);
+    color: #fff;
     transition: 0.2s ease;
+    background-color: var(--primary-background-color);
   }
   
   input[type="submit"] {
     margin-top: 20px;
     width: 150px;
     height: 35px;
-    background: #18E29F;
+    background: var(--primary-blue);
     border: none;
     border-radius: 2px;
     color: #FFF;
@@ -173,10 +225,24 @@ a{
     transition: 0.1s ease;
   }
 
+  .logoutbtn{
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #f8d7da7a;
+    border: 2px solid #ff5768;
+    border-radius: 5px;
+    padding: 5px 16px;
+    margin-top: 1.5rem;
+    position: relative;
+    right: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
 .errorAlert {
-  color: #bd0716;
+  color: #ffffff;
   background-color: #f8d7da7a;
-  border: 2px solid #f5c2c7;
+  border: 2px solid #ff5768;
   border-radius: 5px;
   padding: 10px 16px;
 }
@@ -203,7 +269,7 @@ a{
 .userAndBookInfo{
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 20px;
   padding: 10px 0 10px 10px;
   margin-top: 5px;
   margin-bottom: 1rem;
@@ -211,7 +277,7 @@ a{
 }
 
 .userAndBookInfo h4:nth-child(1){
-  color: rgb(0, 187, 109);
+  color: var(--primary-light-blue);
   margin-bottom: 5px;
   text-decoration: underline;
 }
@@ -219,11 +285,31 @@ a{
 .nameAndAvatar{
   width: 30%;
   text-align: center;
+  margin-left: -15px;
   margin-right: 10px;
+}
+
+.nameAndAvatar a{
+  color: var(--primary-light-blue);
 }
 
 .titleAndDescription{
   width: 100%;
+  /* content: "\a";
+  white-space: pre; */
+}
+
+.readMorebtn{
+  /* background-color: transparent; */
+  color: var(--primary-light-blue);
+  border: 1px solid var(--primary-light-blue);
+  padding: 7px 12px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: inline-block;
+  text-align: right;
+  margin-right: 8px;
+  font-size: 14px;
 }
 
 .userAndBookInfo img{
@@ -232,15 +318,14 @@ a{
 }
 
 .usersReaction{
-  /* background-color: #18E29F; */
   margin-left: 2rem;
   color: #fff;
   display: flex;
   border-radius: 0 0 5px 5px;
   justify-content: flex-end;
-  gap: 4rem;
+  gap: 3rem;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 10px;
 }
 
 .usersReaction p{
@@ -254,15 +339,16 @@ a{
 
 .bookAuthorName{
   margin-top: 10px;
-  color: #6b6b6b;
+  color: #b9b9b9;
   display: block;
   text-align: right;
   margin-right: 8px;
+  font-size: 14px;
 }
 
 .sliderComponent{
   position: relative;
-  width: 90%;
+  width: 85%;
   margin: 20% auto 0;
   /* margin-top: 20%; */
   padding:7px;
@@ -280,7 +366,7 @@ a{
 .slick-prev::before,
 .slick-next::before{
   /* display: none; */
-  color: #18E29F !important;
+  color: var(--primary-light-blue) !important;
 }
 
 .singleCarousel{
@@ -292,7 +378,8 @@ a{
   height: 25%;
   width: 50px;
   overflow: hidden;
-  background-color: #003121;
+  background-color: var(--primary-blue);
+  /* border: 1px solid #fff; */
   color: #fff;
 }
 
@@ -308,7 +395,225 @@ a{
   border-top: 1px solid #fff;
 }
 
-.userDashboardContainer, .userProfile, .singleUserProfile{
+.userDashboardContainer, .singleUserProfile{
   margin: 3.2rem 0 4rem;
+}
+
+.totalBooksPosted{
+  color:#fff;
+  /* font-size: 5rem; */
+  margin-top: 4rem;
+}
+
+.dashBoardLayout{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 2rem;
+  padding: 1rem;
+}
+
+.dashBoardUser{
+  font-size: 20px;
+  text-align: center;
+  background-color: var(--primary-blue);
+  padding: 1rem 0;
+  border-radius: 10px;
+  border: 3px solid var(--primary-light-blue);
+}
+
+.UserPreviousPostedBookContainer{
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 1rem;
+  background-color: var(--primary-blue);
+  margin: 10px 1.5rem;
+}
+
+.UserPreviousPostedBookComponent h3{
+  color: #fff;
+  margin: 2rem 1.5rem 5px;
+}
+
+.postBookContainer{
+  display: grid;
+  padding: 10px 1.5rem;
+  /* place-content: center; */
+}
+
+.postBookContainer label{
+  color: #fff;
+}
+
+.postBookContainer div{
+  margin: 10px 0;
+}
+
+.postBookInput::placeholder{
+  font-style: italic;
+}
+
+.postBookInput{
+  width: 100% !important;
+  border-radius: 5px;
+  margin:5px auto !important;
+  height: 2.5rem !important;
+  border: 1px solid #aaa !important;
+}
+
+.postBookTextarea{
+  height: 10rem !important;
+  background-color: var(--primary-background-color);
+  color: #fff;
+  font-size: 18px;
+}
+
+.postBookContainer input[type="submit"]{
+  margin: 0 !important;
+  position: relative;
+  right: 10%;
+  left: 50%;
+  transform: translate(20%, -10%);
+}
+
+.userProfile{
+  margin-top: 5rem;
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: 10px;
+  color: #fff;
+}
+
+.userProfile img{
+  width: 65%;
+  border-radius: 50%;
+}
+
+.userProfile div{
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.userProfile div span{
+  background-color: var(--primary-light-blue);
+  padding: 1px 10px;
+  border-radius: 8px;
+  margin-left: 7px;
+}
+
+.bookDetails{
+  margin-top: 5rem;
+  display: grid;
+  place-content: center;
+  color: #fff;
+  padding: 0 1rem;
+}
+
+.bookDetails h4{
+  text-decoration: underline;
+  margin-bottom: .7rem;
+}
+
+.bookDetails p{
+  margin-bottom: 10px;
+}
+
+.bookPageInfo span{
+  font-weight: bold;
+  text-decoration: underline;
+  margin-right: 10px;
+}
+
+.bookUsersReaction{
+  color: #fff;
+  display: flex;
+  border-radius: 0 0 5px 5px;
+  justify-content: center;
+  gap: 4rem;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.bookUsersReaction p{
+  background-color: var(--primary-light-blue);
+  padding: 1px 10px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  gap:3px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.bookUsersReaction i{
+  margin-right: 5px;
+}
+
+.bookComments{
+  margin-bottom: 10rem;
+}
+
+.readersComments{
+  background-color: var(--primary-blue);
+  padding: 7px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.readersComments em{
+  font-size: 14px;
+  color: rgb(192, 192, 192);
+}
+
+.commentInput{
+  position: fixed;
+  bottom: 7%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 100%;
+}
+
+.commentInput button {
+  border: none;
+  font-size: 22px;
+  background-color: transparent;
+  color: var(--primary-light-blue);
+}
+
+.commentInput input{
+  font-weight: 400;
+  border: 1px solid var(--primary-light-blue);
+  height: 5px;
+  width: 75%;
+  padding: 14px 7px;
+  margin-top: 10px;
+  margin-right: 12px;
+  border-radius: 50px;
+}
+
+.commentInput input::placeholder{
+  font-style: italic;
+}
+
+.tags{
+  display: flex;
+  gap: 5px;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--primary-light-blue);
+}
+
+.bookDescription{
+  /* overflow-wrap: anywhere; */
+  word-break: break-all;
+  line-height: 25px;
+  font-size: 18px;
 }
 /* https://www.youtube.com/watch?v=FLt2TveqHQM */

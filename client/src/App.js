@@ -10,6 +10,7 @@ import UserDashboard from './pages/UserDashboard';
 import UserProfile from './pages/UserProfile';
 import SingleUserProfile from './pages/SingleUserProfile';
 import InitialTopNav from './components/InitialTopNav';
+import InitialBottomNav from './components/InitialBottomNav';
 import { useSelector } from 'react-redux'
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
               <Route path='/myProfile' element={<UserProfile />} />
               <Route path='/user/:id' element={<SingleUserProfile />} />
           </Routes>
-          <BottomNav />
+          {user.value ?  <BottomNav /> : <InitialBottomNav />}
         </BrowserRouter>
       </>
   );

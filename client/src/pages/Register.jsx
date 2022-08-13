@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import ErrorMsg from '../components/ErrorMsg'
+import { useDispatch } from 'react-redux'
+import { LOGIN } from '../redux/userSlice'
 
 const Register = () => {
   const [name, setName] = useState("")
@@ -10,6 +12,7 @@ const Register = () => {
   const [error, setError] = useState(false)
   const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -55,14 +58,15 @@ const Register = () => {
           
       }else{
         navigate('/')
-        console.log(data)
+        dispatch(LOGIN(data))
+        localStorage.setItem('signedInuser',JSON.stringify(data))
       }
     }
   }
 
   return (
         <form className="signup-fields" onSubmit={handleRegister}>
-            <h1>Sign up</h1>
+            <h1 style={{textAlign:"left"}}>Sign up</h1>
             {error && <ErrorMsg msg={error}/>}
             <div className="inputParent">
               <input type="text" name="name" placeholder="Userame" onChange={e => setName(e.target.value)} value={name}/>

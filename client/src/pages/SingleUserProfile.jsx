@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import UserProfileComponent from '../components/UserProfileComponent'
 
 const SingleUserProfile = () => {
     let { id } = useParams();
@@ -29,16 +30,17 @@ const SingleUserProfile = () => {
         const data = await response.json()
         if(response.ok){
           setUserDetails(data)
+          console.log(data)
         }else{
-          console.log(response)
+          console.log(response.statusText)
         }
     }
 
     console.log(userDetails)
 
   return (
-    <div className='singleUserProfile'>
-
+    <div>
+      {userDetails && <UserProfileComponent user={userDetails}/>}
     </div>
   )
 }
