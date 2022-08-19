@@ -9,6 +9,7 @@ const Home = () => {
   const navigate = useNavigate()
 
   const user = useSelector(state => state.user)
+
   useEffect(() => {
     if(user.value === null){
       navigate('/loginuser')
@@ -25,7 +26,7 @@ const Home = () => {
         Authorization: `Bearer ${user.value.token}`
       }
     })
-    console.log(response)
+    // console.log(response)
     const data = await response.json()
 
     if(response.ok){
@@ -33,7 +34,7 @@ const Home = () => {
     }
   }
 
-  console.log(allBooks)
+  // console.log(allBooks)
 
 
 

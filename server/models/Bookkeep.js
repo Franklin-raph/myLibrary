@@ -42,14 +42,14 @@ const BookKeepingSchema = mongoose.Schema({
     comments: [
         {
           user:{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        text: {
             type: String,
             required: true
         },
-        date: {
+          text: {
+            type: String,
+            required: true
+        },
+          date: {
             type: Date,
             default: Date.now()
         }

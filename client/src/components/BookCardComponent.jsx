@@ -3,19 +3,23 @@ import { Link } from 'react-router-dom'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { useDispatch } from 'react-redux';
+import { likeAndUnlikeBook } from '../redux/userPostSlice'
 
 
 const BookCardComponent = ({aBook}) => {
 
+  const dispatch = useDispatch()
   useEffect(() => {
-    AOS.init();
-    AOS.refresh();
+    // AOS.init();
+    // AOS.refresh();
   },[])
+
   // {formatDistanceToNow(new Date(workout.createdAt), { suffix: true})}
   return (
     <div>
       <div className='hr'></div>
-      <div data-aos="fade-up" className='singleBookCard'>
+      <div className='singleBookCard'>
           <div className="userAndBookInfo">
             <div className="nameAndAvatar">
               <img src={aBook.avatar} alt="User avatar"/>
@@ -26,7 +30,7 @@ const BookCardComponent = ({aBook}) => {
               <p className='bookDescription'>{aBook.description.substring(0, 150)}...</p>
               <Link to={`/book/${aBook._id}`} className="readMorebtn">Read More</Link>
               <i className='bookAuthorName'>Author:{aBook.author}</i>
-              <p style={{paddingTop:'10px', fontWeight:'100'}}><em>{formatDistanceToNow(new Date(aBook.createdAt), { suffix: true})}  ago</em></p>
+              <p style={{paddingTop:'10px', color:'#000', textAlign:'right', fontWeight:'400'}}><em>{formatDistanceToNow(new Date(aBook.createdAt), { suffix: true})}  ago</em></p>
             </div>
           </div>
           <div className="usersReaction">
@@ -36,7 +40,7 @@ const BookCardComponent = ({aBook}) => {
             </p>
 
             <p>
-              <i className="ri-thumb-up-line"></i>
+              <i className="ri-thumb-up-line" onClick={e => likeAndUnlikeBook()}></i>
               <span>{aBook.likes.length}</span>
             </p>
 

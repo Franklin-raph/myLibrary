@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addBook } from '../redux/userPostSlice'
 
 const PostBookComponent = () => {
 
-    const user = useSelector(state => state.user)
+    // const user = useSelector(state => state.user)
+    // const userPost = useSelector(state => state.userPost)
+    const dispatch = useDispatch()
 
     const [title, setTitle] = useState("")
     const [author, setAuthor] = useState("")
@@ -15,19 +18,28 @@ const PostBookComponent = () => {
 
     const handlePostBook = async (e) => {
         e.preventDefault()
-        const bookData = {title, author, publishedDate, description, bookGenre, tags}
-        const response = await fetch("/api/v1/mylibrary/books/postbook", {
-            method: "POST",
-            headers:{
-                Authorization: `Bearer ${user.value.token}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(bookData)
-        })
-        if(response.ok){
-            setSuccessMessage("Book was successfully posted")
-            // form.reset()
-        }
+        dispatch(addBook({
+            title: title,
+            author: author,
+            publishedDate: publishedDate,
+            description: description,
+            bookGenre: bookGenre,
+            tags: tags
+        }))
+        // const bookData = {title, author, publishedDate, description, bookGenre, tags}
+        // const response = await fetch("/api/v1/mylibrary/books/postbook", {
+        //     method: "POST",
+        //     headers:{
+        //         Authorization: `Bearer ${user.value.token}`,
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify(bookData)
+        // })
+        // const data = await response.json()
+        // if(response.ok){
+        //     dispatch(ADDBOOK(bookData))
+        //     setSuccessMessage("Book was successfully posted")
+        // }
     }
 
   return (

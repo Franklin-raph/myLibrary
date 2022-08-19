@@ -3,52 +3,47 @@ import { Link, useNavigate } from 'react-router-dom'
 import UserProfileComponent from '../components/UserProfileComponent'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { VIEWPROFILE } from '../redux/userSlice'
 import LogoutButton from '../components/LogoutButton'
 
 const UserProfile = () => {
 
-  const [userDetails, setUserDetails] = useState()
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const [userDetails, setUserDetails] = useState();
+  const user = useSelector(state => state.user)
 
-  const user = useSelector(state => state.user.value.user)
-  // const user = useSelector(state => state.user.value)  ===> If i would ever user the token for anything in the future i would use this
-  console.log(user)
   useEffect(() => {
-    if(user === null){
+    if(user.value === null){
       navigate('/loginuser')
       return
     }else{
-      // fetchUserProfile()
+      getMyProfile()
     }
   },[])
 
+  const getMyProfile = async () => {
+      const response = await fetch('/api/v1/mylibrary/user/me', {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${user.value.token}`
+        }
+      })
+      console.log(response)
+      const data = await response.json()
+      if(response.ok){
+        setUserDetails(data)
+        console.log(data)
+      }else{
+        console.log(response.statusText)
+      }
+  }
 
-    // const fetchUserProfile = async () => {
-    //     const response = await fetch('/api/v1/mylibrary/user/me', {
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: `Bearer ${user.value.token}`
-    //       }
-    //     })
-    //     const data = await response.json()
-    //     if(response.ok){
-    //       // dispatch(VIEWPROFILE(data))
-    //       setUserDetails(data)
-    //     }else{
-    //       console.log(response.statusText)
-    //     }
-    // }
+  console.log(userDetails)
 
-    // console.log(userDetails.user.name)
-
-  return (
-    <div>
-      <UserProfileComponent user={user}/>
-      <LogoutButton />
-    </div>
-  )
+return (
+  <div>
+    {userDetails && <UserProfileComponent user={userDetails}/>}
+    <LogoutButton />
+  </div>
+)
 }
-
 export default UserProfile

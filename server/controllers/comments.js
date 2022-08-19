@@ -20,8 +20,7 @@ const createComment = async (req, res) => {
 
             const newComment = {
                 text: req.body.text,
-                name:signedInUser.name,
-                user: signedInUser._id.toString(),
+                user:signedInUser.name,
             }
             console.log(newComment)
 

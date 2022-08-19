@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { postComment, getBookDetailComment } from '../redux/userCommentSlice'
 
 
 const BookDetailsPage = () => {
     let { bookId } = useParams()
     const [bookDetail, setBookDetail] = useState([])
-    const [postedByUser, setPostedByUser] = useState([])
+    const [text, setText] = useState("")
     const user = useSelector(state => state.user)
+    const userPost = useSelector(state => state.userPost)
+    const userBook = useSelector(state => state.userComment)
+
+    // const { book } = userPost
+    const userBookComments = useSelector(state => state.userComment.book)
+    console.log()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -16,6 +24,8 @@ const BookDetailsPage = () => {
         navigate('/loginuser')
         return
       }else{
+        dispatch(getBookDetailComment(bookId))
+        // dispatch(readersComment())
         fetchBookDetail()
       }
     },[])
@@ -29,29 +39,30 @@ const BookDetailsPage = () => {
         })
         const data = await response.json()
         setBookDetail(data.book)
-        setPostedByUser(data.bookWasPostedBy)
-        console.log(bookDetail)
     }
-    console.log(bookDetail)
-    // bookDetail.map((c) => {
-    //   console.log(c)
-    // })
 
-    console.log(bookDetail)
-    // 
+    const handleCommentPost = () => {
+        dispatch(postComment({
+          user: user.value.user.name,
+          text,
+          bookId
+        }))
+        navigate('/userdashboard')
+    }
+    
   return (
     <div className='bookDetails'>
-      {bookDetail && (
+      {userBook.book && (
         <div>
           <div className='bookPageInfo'>
-            <h4>Title: {bookDetail.title}</h4>
-            <p className="bookDescription"><span>Book Description:</span>{bookDetail.description}</p>
-            <p><span>Book Genre:</span> <em>{bookDetail.bookGenre}</em> </p>
-            <p><span>Book Author:</span> <em>{bookDetail.author}</em></p>
-            <p><span>Published Date:</span>{bookDetail.publishedDate}</p>
+            <h4>Title: {userBook.book.title}</h4>
+            <p className="bookDescription"><span>Book Description:</span>{userBook.book.description}</p>
+            <p><span>Book Genre:</span> <em>{userBook.book.bookGenre}</em> </p>
+            <p><span>Book Author:</span> <em>{userBook.book.author}</em></p>
+            <p><span>Published Date:</span>{userBook.book.publishedDate}</p>
             <div className="tags">
-              {bookDetail.tags && (
-                  bookDetail.tags.map((tag, index) => (
+              {userBook.tags && (
+                  userBook.tags.map((tag, index) => (
                     <div key={index}>
                       <p>#{tag}</p>
                     </div>
@@ -60,17 +71,17 @@ const BookDetailsPage = () => {
             </div>
           </div>
           <div className="bookUsersReaction">
-          {bookDetail.comments && (
+          {userBook.book.comments && (
             <p>
               <i className="ri-message-2-line"></i>
-              <span>{bookDetail.comments.length}</span>
+              <span>{userBook.book.comments.length}</span>
             </p>
             )}
 
-          {bookDetail.likes && (
+          {userBook.book.likes && (
             <p>
               <i className="ri-thumb-up-line"></i>
-              <span>{bookDetail.likes.length}</span>
+              <span>{userBook.book.likes.length}</span>
             </p>
           )}
 
@@ -80,8 +91,8 @@ const BookDetailsPage = () => {
           </div>
           <div className="bookComments">
             <h4>Comment Section</h4>
-            {bookDetail.comments && (
-                  bookDetail.comments.length ? bookDetail.comments.map((comment) => (
+            {userBook.book.comments && (
+                  userBook.book.comments.length ? userBook.book.comments.map((comment) => (
                     <div key={comment._id}>
                         <p className="readersComments">
                           {comment.text}
@@ -93,9 +104,9 @@ const BookDetailsPage = () => {
               )}
           </div>
           <div className='commentInput'>
-            <input type='text' placeholder='Leave a comment'/>
+            <input type='text' onChange={e => setText(e.target.value)} value={text} placeholder='Leave a comment'/>
             <button>
-              <i className="ri-send-plane-2-fill"></i>
+              <i className="ri-send-plane-2-fill" onClick={handleCommentPost}></i>
             </button>
           </div>
         </div>

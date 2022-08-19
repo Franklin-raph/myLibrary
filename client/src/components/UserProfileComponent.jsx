@@ -4,7 +4,7 @@ const UserProfileComponent = ({user}) => {
   return (
     <div className='userProfile'>
         <img src={user.avatar} alt="Users image" />
-        <h1 style={{color:'#fff'}}>{user.name}</h1>
+        <h1 style={{color:'hsl(229, 31%, 21%)'}}>{user.name}</h1>
         <h2>{user.email}</h2>
         <hr style={{width:"100%"}}/>
         <div>

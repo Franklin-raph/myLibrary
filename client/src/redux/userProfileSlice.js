@@ -5,10 +5,10 @@ console.log(signedInUserProfile)
 
 export const userProfileSlice = createSlice({
     name:"userProfile",
-    initialState: {value: JSON.parse(signedInUserProfile)},
+    initialState: [{value: JSON.parse(signedInUserProfile)}],
     reducers:{
         VIEWPROFILE:(state, action) => {
-            state.value = action.payload
+            state = action.payload
         }
     }
 })

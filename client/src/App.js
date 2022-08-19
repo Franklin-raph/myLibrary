@@ -16,12 +16,6 @@ import { useSelector } from 'react-redux'
 function App() {
 
   const user = useSelector(state => state.user)
-  // if(user.value !== null){
-  //   console.log("Present")
-  // }else{
-  //   console.log("Absent")
-  // }
-  // console.log(user)
 
   return (
       <>
@@ -31,9 +25,9 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/loginuser' element={<Login />} />
               <Route path='/registeruser' element={<Register />} />
-              <Route path='/book/:bookId' element={<BookDetailsPage />} />
-              <Route path='/userdashboard' element={<UserDashboard />} />
               <Route path='/myProfile' element={<UserProfile />} />
+              <Route path='/userdashboard' element={<UserDashboard />} />
+              <Route path='/book/:bookId' element={<BookDetailsPage />} />
               <Route path='/user/:id' element={<SingleUserProfile />} />
           </Routes>
           {user.value ?  <BottomNav /> : <InitialBottomNav />}
