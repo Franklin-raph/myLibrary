@@ -7,12 +7,11 @@ import PostBookComponent from '../components/PostBookComponent'
 import UserPreviousPostedBookComponent from '../components/UserPreviousPostedBookComponent'
 import DashboardUserAndTotalBookComponent from '../components/DashboardUserAndTotalBookComponent'
 
-
 const UserDashboard = () => {
 
   const user = useSelector(state => state.user)
   const userPost = useSelector(state => state.userPost)
-  console.log(userPost)
+  console.log(Array.isArray(userPost))//Array.isArray(state)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -25,6 +24,8 @@ const UserDashboard = () => {
       console.log(userPost)
     }
   },[])
+
+
 
   return (
     <div className='userDashboardContainer'>

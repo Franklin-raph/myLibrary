@@ -4,8 +4,6 @@ import { addBook } from '../redux/userPostSlice'
 
 const PostBookComponent = () => {
 
-    // const user = useSelector(state => state.user)
-    // const userPost = useSelector(state => state.userPost)
     const dispatch = useDispatch()
 
     const [title, setTitle] = useState("")
@@ -26,20 +24,6 @@ const PostBookComponent = () => {
             bookGenre: bookGenre,
             tags: tags
         }))
-        // const bookData = {title, author, publishedDate, description, bookGenre, tags}
-        // const response = await fetch("/api/v1/mylibrary/books/postbook", {
-        //     method: "POST",
-        //     headers:{
-        //         Authorization: `Bearer ${user.value.token}`,
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(bookData)
-        // })
-        // const data = await response.json()
-        // if(response.ok){
-        //     dispatch(ADDBOOK(bookData))
-        //     setSuccessMessage("Book was successfully posted")
-        // }
     }
 
   return (

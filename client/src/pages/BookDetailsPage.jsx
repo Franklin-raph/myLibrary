@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { postComment, getBookDetailComment } from '../redux/userCommentSlice'
 
+import { postComment, getAllCommentsForABook } from '../redux/userCommentSlice'
+import { deleteMyBook } from '../redux/userPostSlice'
+import { likeAndDislikeBook } from '../redux/likeAndDislikeBookSlice'
+import CommentListComponent from '../components/CommentListComponent'
 
 const BookDetailsPage = () => {
     let { bookId } = useParams()
-    const [bookDetail, setBookDetail] = useState([])
     const [text, setText] = useState("")
     const user = useSelector(state => state.user)
-    const userPost = useSelector(state => state.userPost)
-    const userBook = useSelector(state => state.userComment)
+    
 
-    // const { book } = userPost
-    const userBookComments = useSelector(state => state.userComment.book)
-    console.log()
+    
+
+    const [userBook, setUserBook] = useState({})
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -24,11 +25,16 @@ const BookDetailsPage = () => {
         navigate('/loginuser')
         return
       }else{
-        dispatch(getBookDetailComment(bookId))
-        // dispatch(readersComment())
+        dispatch(getAllCommentsForABook(bookId))
         fetchBookDetail()
       }
     },[])
+
+    const userBookComments = useSelector(state => state.userComment)
+    const likeAndDislikePostedBook = useSelector(state => state.likeAndDislikeBook)
+    console.log(likeAndDislikePostedBook.msg)
+    console.log(Array.isArray(likeAndDislikePostedBook))
+    console.log(userBookComments)
 
     const fetchBookDetail = async () => {
         const response = await fetch(`/api/v1/mylibrary/books/${bookId}`, {
@@ -38,8 +44,8 @@ const BookDetailsPage = () => {
           }
         })
         const data = await response.json()
-        setBookDetail(data.book)
-    }
+        setUserBook(data)
+      }
 
     const handleCommentPost = () => {
         dispatch(postComment({
@@ -47,7 +53,17 @@ const BookDetailsPage = () => {
           text,
           bookId
         }))
-        navigate('/userdashboard')
+        // window.location.reload()
+    }
+
+    const handleBookDelete = () => {
+      dispatch(deleteMyBook(bookId))
+      navigate('/userdashboard')
+      window.location.reload()
+    }
+
+    const handleLikeanddislike= () => {
+      dispatch(likeAndDislikeBook(bookId))
     }
     
   return (
@@ -70,45 +86,40 @@ const BookDetailsPage = () => {
                 )}
             </div>
           </div>
-          <div className="bookUsersReaction">
-          {userBook.book.comments && (
+          {/* <div className="bookUsersReaction">
+          {userBookComments && (
             <p>
               <i className="ri-message-2-line"></i>
-              <span>{userBook.book.comments.length}</span>
+              <span>{userBookComments.length}</span>
             </p>
             )}
 
-          {userBook.book.likes && (
+          {likeAndDislikePostedBook && (
             <p>
-              <i className="ri-thumb-up-line"></i>
-              <span>{userBook.book.likes.length}</span>
+              <i className="ri-thumb-up-line" onClick={handleLikeanddislike}></i>
+              <span>{likeAndDislikePostedBook.msg}</span>
             </p>
           )}
 
             <p>
               <i className="ri-share-line"></i>
             </p>
-          </div>
-          <div className="bookComments">
+          </div> */}
+          <div className='actions'>
+                <i className="ri-edit-2-fill"></i>
+                <i className="ri-delete-bin-2-fill" onClick={() => handleBookDelete()}></i>
+                {/* <i className="ri-delete-bin-2-fill" onClick={() => dispatch(deleteMyBook(userBook._id))}></i> */}
+            </div>
+          {/* <div className="bookComments">
             <h4>Comment Section</h4>
-            {userBook.book.comments && (
-                  userBook.book.comments.length ? userBook.book.comments.map((comment) => (
-                    <div key={comment._id}>
-                        <p className="readersComments">
-                          {comment.text}
-                          <em>({formatDistanceToNow(new Date(comment.date), { suffix: true})}  ago)</em>
-                        </p>
-                    </div>
-                )) : "!No Comment for this book. Be the first person to leave  a comment by using the comment field below."
-                
-              )}
+            {userBookComments && < CommentListComponent key={userBookComments._id} comments={userBookComments} />}
           </div>
           <div className='commentInput'>
             <input type='text' onChange={e => setText(e.target.value)} value={text} placeholder='Leave a comment'/>
             <button>
               <i className="ri-send-plane-2-fill" onClick={handleCommentPost}></i>
             </button>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

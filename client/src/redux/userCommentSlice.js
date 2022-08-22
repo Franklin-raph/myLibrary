@@ -1,5 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+export const getAllCommentsForABook = createAsyncThunk(
+    'userComment/getCommentAsync',
+    async(payload) => {
+        const signedInUser = localStorage.getItem('signedInuser')
+        const userToken = JSON.parse(signedInUser)
+        const { token } = userToken
+        // console.log(payload)
+        const response = await fetch(`/api/v1/mylibrary/books/bookcomments/${payload}`,{
+            method: "GET",
+            headers : {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if(response.ok){
+            const data = await response.json();
+            // console.log(Array.isArray(data))
+            return { data }
+        }
+    }
+)
+
+
 export const postComment = createAsyncThunk(
     'userComment/createCommentAsync',
     async(payload) => {
@@ -20,32 +42,10 @@ export const postComment = createAsyncThunk(
         })
         if(response.ok){
             const data = await response.json();
+            console.log(Array.isArray(data))
             return { data }
         }else{
             console.log(response.statusText)
-        }
-    }
-)
-
-
-
-export const getBookDetailComment = createAsyncThunk(
-    'userComment/getCommentAsync',
-    async(payload) => {
-        const signedInUser = localStorage.getItem('signedInuser')
-        const userToken = JSON.parse(signedInUser)
-        const { token } = userToken
-        console.log(payload)
-        const response = await fetch(`/api/v1/mylibrary/books/${payload}`,{
-            method: "GET",
-            headers : {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        if(response.ok){
-            const data = await response.json();
-            console.log(data)
-            return { data }
         }
     }
 )
@@ -57,30 +57,19 @@ export const userCommentSlice = createSlice({
     reducers:{
     },
     extraReducers:{
+        [postComment.pending]: (state, action) => {
+            // console.log(Array.isArray(state))
+        },
         [postComment.fulfilled]: (state, action) => {
-            console.log(state)
-            return action.payload.data;
+            // Object.entries(state.userComment)
+            state.push(action.payload)
+            // console.log(Array.isArray(state))
         },
-        [getBookDetailComment.fulfilled]: (state, action) => {
-            console.log(action.payload.data)
-            return action.payload.data;
-        },
-
-        // [likeAndUnlikeBook.fulfilled]: (state, action) => {
-        //     const index = state.findIndex(
-        //         (data) => data.id === action.payload.id
-        //     );
-        //     state[index].push(action.payload.data)
-        // },
-        // [likeAndUnlikeBook.pending]: (state, action) => {
-        //     console.log("Fetching data...")
-        // },
-        // [likeAndUnlikeBook.rejected]: (state, action) => {
-        //     console.log("Could not fetch data")
-        // }
-
+        [getAllCommentsForABook.fulfilled]: (state, action) => {
+            // console.log(action.payload.data)
+            return (action.payload.data)
+        }
     }
 })
 
-export const { ADDBOOK } = userCommentSlice.actions
 export default userCommentSlice.reducer

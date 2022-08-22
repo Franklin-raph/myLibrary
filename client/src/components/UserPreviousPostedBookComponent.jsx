@@ -1,7 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
 const UserPreviousPostedBookComponent = ({userBooks}) => {
+  const userPost = useSelector(state => state.userPost)
+  console.log(userPost)
+
   return (
     <div className='UserPreviousPostedBookComponent'>
         <h3>My Previously Posted Books</h3>
@@ -13,10 +17,6 @@ const UserPreviousPostedBookComponent = ({userBooks}) => {
                 <h4>{userBook.title}</h4>
               </div>
             </Link>
-            <div className='actions'>
-                <i className='ri-pencil-fill'></i>
-                <i className='ri-waste-fill'></i>
-            </div>
           </div>
           ))
         )}

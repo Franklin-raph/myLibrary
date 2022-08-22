@@ -40,7 +40,7 @@ const UserProfile = () => {
   console.log(userDetails)
 
 return (
-  <div>
+  <div className="userProfilePage">
     {userDetails && <UserProfileComponent user={userDetails}/>}
     <LogoutButton />
   </div>

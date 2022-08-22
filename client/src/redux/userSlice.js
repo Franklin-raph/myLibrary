@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const signedInUser = localStorage.getItem('signedInuser')
-console.log(signedInUser)
+// console.log(signedInUser)
 
 export const userSlice = createSlice({
     name:"user",
