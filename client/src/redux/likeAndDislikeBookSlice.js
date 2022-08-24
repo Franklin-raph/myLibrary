@@ -7,7 +7,7 @@ export const likeAndDislikeBook = createAsyncThunk(
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
 
-        const response = await fetch(`/api/v1/mylibrary/books/likebook/${payload}`,{
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/likebook/${payload}`,{
             method: "PATCH",
             headers :{
                 Authorization: `Bearer ${token}`

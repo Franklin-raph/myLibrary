@@ -11,11 +11,8 @@ const BookDetailsPage = () => {
     let { bookId } = useParams()
     const [text, setText] = useState("")
     const user = useSelector(state => state.user)
-    
-
-    
-
     const [userBook, setUserBook] = useState({})
+
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -30,14 +27,14 @@ const BookDetailsPage = () => {
       }
     },[])
 
-    const userBookComments = useSelector(state => state.userComment)
-    const likeAndDislikePostedBook = useSelector(state => state.likeAndDislikeBook)
-    console.log(likeAndDislikePostedBook.msg)
-    console.log(Array.isArray(likeAndDislikePostedBook))
-    console.log(userBookComments)
+    // const userBookComments = useSelector(state => state.userComment)
+    // const likeAndDislikePostedBook = useSelector(state => state.likeAndDislikeBook)
+    // console.log(likeAndDislikePostedBook.msg)
+    // console.log(Array.isArray(likeAndDislikePostedBook))
+    // console.log(userBookComments)
 
     const fetchBookDetail = async () => {
-        const response = await fetch(`/api/v1/mylibrary/books/${bookId}`, {
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/${bookId}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${user.value.token}`
@@ -45,7 +42,16 @@ const BookDetailsPage = () => {
         })
         const data = await response.json()
         setUserBook(data)
+        console.log(data)
       }
+      // console.log(userBook.book.user)
+
+      // if(userBook.book.user !== userBook.bookWasPostedBy._id){
+      //   console.log("Not Equal")
+      // }else{
+      //   console.log("Equal")
+      // }
+      // console.log(user.value)
 
     const handleCommentPost = () => {
         dispatch(postComment({
@@ -64,6 +70,10 @@ const BookDetailsPage = () => {
 
     const handleLikeanddislike= () => {
       dispatch(likeAndDislikeBook(bookId))
+    }
+
+    const handleBookEdit = () => {
+
     }
     
   return (
@@ -106,20 +116,15 @@ const BookDetailsPage = () => {
             </p>
           </div> */}
           <div className='actions'>
-                <i className="ri-edit-2-fill"></i>
-                <i className="ri-delete-bin-2-fill" onClick={() => handleBookDelete()}></i>
+                <button onClick={() => handleBookEdit()}>
+                  <p>Edit <i className="ri-edit-2-fill"></i></p>
+                </button>
+                <button onClick={() => handleBookDelete()}>
+                  <p>Delete <i className="ri-delete-bin-2-fill"></i></p>
+                </button>
                 {/* <i className="ri-delete-bin-2-fill" onClick={() => dispatch(deleteMyBook(userBook._id))}></i> */}
             </div>
-          {/* <div className="bookComments">
-            <h4>Comment Section</h4>
-            {userBookComments && < CommentListComponent key={userBookComments._id} comments={userBookComments} />}
-          </div>
-          <div className='commentInput'>
-            <input type='text' onChange={e => setText(e.target.value)} value={text} placeholder='Leave a comment'/>
-            <button>
-              <i className="ri-send-plane-2-fill" onClick={handleCommentPost}></i>
-            </button>
-          </div> */}
+            <i style={{color:'grey', fontSize:'12px'}}>Note: You can only <span style={{fontWeight:'bold', color:'#af7e00'}}>EDIT</span> or <span style={{fontWeight:'bold', color:'#ff5768'}}>DELETE</span> your own post.</i>
         </div>
       )}
     </div>

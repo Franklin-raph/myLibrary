@@ -7,7 +7,7 @@ export const getBookDetail = createAsyncThunk(
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
         console.log(payload)
-        const response = await fetch(`/api/v1/mylibrary/books/${payload}`,{
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/${payload}`,{
             method: "GET",
             headers : {
                 Authorization: `Bearer ${token}`

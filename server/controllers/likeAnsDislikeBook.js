@@ -1,4 +1,4 @@
-const Test = require('../models/testmodel')
+const Book = require('../models/Bookkeep')
 const User = require('../models/User')
 const mongoose  = require('mongoose')
 
@@ -11,7 +11,7 @@ const likeAndDislikeBook = async (req, res) => {
 
         const signedInUser = (await User.findById(req.user.id))._id.toString()
 
-        const postedBookData = await Test.findById(req.params.id)
+        const postedBookData = await Book.findById(req.params.id)
 
         if(postedBookData === null) return res.status(404).json({Msg: "Book not found"})
 
@@ -25,12 +25,12 @@ const likeAndDislikeBook = async (req, res) => {
             postedBookData.likes.splice(removeIndex, 1)
             
             await postedBookData.save()
-            return res.status(200).json({postedBookData, msg:"Book has been unliked"})
+            return res.status(200).json({msg:postedBookData.likes.length})
 
         }else if(postedBookData.likes.filter(like => like.user.toString() === signedInUser).length === 0){
             postedBookData.likes.unshift({user: signedInUser})
             await postedBookData.save()
-            return res.status(200).json({postedBookData, msg:"Book has been liked"})
+            return res.status(200).json({msg:postedBookData.likes.length})
         }
     } catch (error) {
         res.status(500).json({Err: error.message})

@@ -13,9 +13,16 @@ const PostBookComponent = () => {
     const [bookGenre, setBookGenre] = useState("")
     const [tags, setTags] = useState("")
     const [successMessage, setSuccessMessage] = useState("")
+    const [error, setErrorMessage] = useState("")
 
     const handlePostBook = async (e) => {
         e.preventDefault()
+        if(title === "" || author ==="" || publishedDate === "" || bookGenre === "" || tags === ""){
+            setErrorMessage("Please validate all fields my friend!!!")
+            setTimeout(() => {
+                setErrorMessage("")
+            }, 3000)
+        }else{
         dispatch(addBook({
             title: title,
             author: author,
@@ -24,7 +31,18 @@ const PostBookComponent = () => {
             bookGenre: bookGenre,
             tags: tags
         }))
+        setTitle("")
+        setAuthor("")
+        setPublishedDate("")
+        setDescription("")
+        setBookGenre("")
+        setTags("")
+        setSuccessMessage("Book was successfully posted")
+        setTimeout(() => {
+            setSuccessMessage("")
+        }, 3000)
     }
+}
 
   return (
     <form className='postBookContainer' onSubmit={handlePostBook}>
@@ -54,6 +72,9 @@ const PostBookComponent = () => {
             <input placeholder='play, flower' type="text" className='postBookInput' onChange={e=> setTags(e.target.value)} value={tags}/>
         </div>
         <input type="submit" value="Post Book" />
+        {successMessage && (<p className='successMessage'>{successMessage}</p>)}
+
+        {error && (<p className='postError'>{error}</p>)}
     </form>
   )
 }

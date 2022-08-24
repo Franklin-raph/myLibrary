@@ -20,7 +20,7 @@ const SingleUserProfile = () => {
     },[])
 
     const getUser = async () => {
-        const response = await fetch(`/api/v1/mylibrary/allusers/user/${id}`, {
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/allusers/user/${id}`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${user.value.token}`

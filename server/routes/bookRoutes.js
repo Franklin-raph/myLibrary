@@ -5,7 +5,8 @@ const {
         getAllBooks,
         updateMyBook,
         deleteMyBook,
-        viewSingleBook,} = require('../controllers/bookkeepController')
+        viewSingleBook,
+        viewSingleBookComments} = require('../controllers/bookkeepController')
 const { bookRequest } = require('../controllers/bookRequest')
 const { likeAndDislikeBook } = require('../controllers/likeAnsDislikeBook')
 const { createComment, deleteMyComment } = require('../controllers/comments')
@@ -45,7 +46,12 @@ router.patch('/requestbook/:bookId', protectedRoute, bookRequest) //not implemen
 // UPDATE my book
 // @route /api/v1/mylibrary/books/likebook/:id
 // Desc: (PRIVATE) a put request to update my books
-router.put('/likebook/:id', protectedRoute, likeAndDislikeBook)
+router.patch('/likebook/:id', protectedRoute, likeAndDislikeBook)
+
+// GET a single book Comments
+// @route /api/v1/mylibrary/books/bookcomments/:bookId
+// Desc: (PRIVATE) a get request for getting a single book
+router.get('/bookcomments/:bookId', protectedRoute, viewSingleBookComments)
 
 // POST a comment
 // @route /api/v1/mylibrary/books/comment/:bookId
@@ -59,3 +65,14 @@ router.delete('/comment/:bookId/:commentId', protectedRoute, deleteMyComment)
 
 
 module.exports = router
+
+
+
+// {
+//         "title":"good book 1",
+//         "author":"Chinedu",
+//         "publishedDate":"today",
+//         "description":"food ifdificdn ijfijdficdi ifjdcjkn fcdxcjdfkcdjv dc jrjdfjcidjfvirdkvdjidjficdi dfvidjvidfjvidjivkfc jfcidjvjdvjkd c",
+//         "bookGenre": "payload.bookGenre",
+//         "tags": "payload.tags"
+//       }

@@ -21,7 +21,7 @@ const Home = () => {
 
 
   const fetchAllBooks = async () => {
-    const response = await fetch("/api/v1/mylibrary/books/allbooks", {
+    const response = await fetch("https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/allbooks", {
       headers: {
         Authorization: `Bearer ${user.value.token}`
       }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import ErrorMsg from '../components/ErrorMsg'
 import { useDispatch } from 'react-redux'
 import { LOGIN } from '../redux/userSlice'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 const Register = () => {
   const [name, setName] = useState("")
@@ -13,6 +14,7 @@ const Register = () => {
   const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -33,19 +35,21 @@ const Register = () => {
       setTimeout(() => {
         setError(false)
       },3500)
-    }else if(password.length !== 6){
+    }else if(password.length < 6){
       setError("Password length must be at least 6 characters")
       setTimeout(() => {
         setError(false)
       },3500)
     }else{
-      const response = await fetch('/api/v1/mylibrary/auth/signup', {
+      setIsLoading(true);
+      const response = await fetch('https://bookshareserver.herokuapp.com/api/v1/mylibrary/auth/signup', {
       method: 'POST',
       body: JSON.stringify(userRegisterInfo),
       headers: {
         'Content-Type':'application/json',
       }
     })
+    if(response) setIsLoading(false)
       const data = await response.json()
       console.log(data)
       console.log(response)
@@ -65,6 +69,8 @@ const Register = () => {
   }
 
   return (
+    <>
+    {isLoading ? <LoadingSpinner /> : 
         <form className="signup-fields" onSubmit={handleRegister}>
             <h1 style={{textAlign:"left"}}>Sign up</h1>
             {error && <ErrorMsg msg={error}/>}
@@ -77,7 +83,8 @@ const Register = () => {
               <p>Already have an account? <Link to="/loginuser">Sign in</Link></p>
             </div>
         </form>
-
+      }
+    </>
     //   </div>
     // </div>
   )

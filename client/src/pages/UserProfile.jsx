@@ -21,7 +21,7 @@ const UserProfile = () => {
   },[])
 
   const getMyProfile = async () => {
-      const response = await fetch('/api/v1/mylibrary/user/me', {
+      const response = await fetch('https://bookshareserver.herokuapp.com/api/v1/mylibrary/user/me', {
         method: "GET",
         headers: {
           Authorization: `Bearer ${user.value.token}`

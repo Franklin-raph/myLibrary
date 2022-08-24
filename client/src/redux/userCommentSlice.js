@@ -7,7 +7,7 @@ export const getAllCommentsForABook = createAsyncThunk(
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
         // console.log(payload)
-        const response = await fetch(`/api/v1/mylibrary/books/bookcomments/${payload}`,{
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/bookcomments/${payload}`,{
             method: "GET",
             headers : {
                 Authorization: `Bearer ${token}`
@@ -29,7 +29,7 @@ export const postComment = createAsyncThunk(
         const signedInUser = localStorage.getItem('signedInuser')
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
-        const response = await fetch(`/api/v1/mylibrary/books/comment/${payload.bookId}`,{
+        const response = await fetch(`https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/comment/${payload.bookId}`,{
             method:"PATCH",
             headers: {
                 Authorization: `Bearer ${token}`,

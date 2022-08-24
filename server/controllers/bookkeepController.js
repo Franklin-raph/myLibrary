@@ -77,7 +77,7 @@ const deleteMyBook = async (req, res) =>{
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({Err: "No such book found"})
 
         await Book.findOneAndDelete({_id: id})
-        res.status(200).json({Msg: "Book successfully deleted"})
+        res.status(200).json({id})
 
     } catch (error) {
         res.status(500).json({Msg: error.message})
@@ -109,10 +109,37 @@ const viewSingleBook = async (req, res) => {
     }
 }
 
+
+// View a single book Comments
+const viewSingleBookComments = async (req, res) => {
+
+    const { bookId } = req.params
+    try {
+        if(!mongoose.Types.ObjectId.isValid(bookId)) return res.status(404).json({Err: "No such book found"})
+
+        const book = await Book.findById(bookId)
+        if(!book) return res.status(404).json({Msg: "Book not found"})
+
+        // const comment = await Comment.findById(book)
+        // console.log(comment)
+        // if(!comment) return res.status(404).json({Msg: "No comments for this book"})
+
+        console.log(typeof book.user)
+        const bookWasPostedBy = await User.findById(book.user.toString()).select('-password')
+        // if(!bookWasPostedBy) return res.status(404).json({Msg: "No User"})
+        
+        res.status(200).json(book.comments)
+
+    } catch (error) {
+        res.status(500).json(error.message)
+    }
+}
+
 module.exports = {
     createBook,
     getAllBooks,
     updateMyBook,
     deleteMyBook,
     viewSingleBook,
+    viewSingleBookComments
 }

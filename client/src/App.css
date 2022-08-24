@@ -25,6 +25,26 @@ html, body{
 }
 
 
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-spinner {
+  margin: 100% auto;
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /*Light grey*/
+  border-top: 10px solid var(--primary-background-color); 
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}
+
+
 a{
     text-decoration: none;
 }
@@ -175,7 +195,7 @@ a{
     margin-top: 2rem;
   }
   
-  .login-fields input[type="text"],
+  input[type="text"],
   input[type="email"],
   input[type="password"] {
     display: block;
@@ -246,7 +266,7 @@ a{
   }
 
 .errorAlert {
-  color: #ffffff;
+  color: var(--primary-background-color);
   background-color: #f8d7da7a;
   border: 2px solid #ff5768;
   border-radius: 5px;
@@ -475,18 +495,29 @@ a{
   padding-top: 2rem;
 }
 
-.bookDetails i:first-child{
-  color: #FFEDBF;
-  padding: 7px;
+.bookDetails button:first-child p{
+  color: #FFEDBF !important;
+  padding: 8px 14px;
   background-color: var(--primary-background-color);
   border-radius: 10px;
 }
 
-.bookDetails i:last-child{
+
+.bookDetails button:last-child p{
   color: #ff5768;
-  padding: 7px;
+  padding: 8px 14px;
   background-color: var(--primary-background-color);
   border-radius: 10px;
+}
+
+button:disabled{
+  display:none;
+}
+
+button{
+  border: none;
+  background-color: transparent;
+  padding: 10px;
 }
 
 .postBookContainer{
@@ -682,4 +713,19 @@ a{
   line-height: 25px;
   font-size: 18px;
 }
+
+.postError{
+  margin-top: 5px;
+  background-color: #ac0011;
+  padding: 10px;
+  color: #fff;
+}
+
+.successMessage{
+  margin-top: 5px;
+  background-color: #00b65b;
+  padding: 10px;
+  color: #fff;
+}
+
 /* https://www.youtube.com/watch?v=FLt2TveqHQM */

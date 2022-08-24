@@ -6,7 +6,7 @@ export const getMyBooks = createAsyncThunk(
         const signedInUser = localStorage.getItem('signedInuser')
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
-        const response = await fetch('/api/v1/mylibrary/user/mybooks',{
+        const response = await fetch('https://bookshareserver.herokuapp.com/api/v1/mylibrary/user/mybooks',{
             method: "GET",
             headers : {
                 Authorization: `Bearer ${token}`
@@ -26,7 +26,7 @@ export const addBook = createAsyncThunk(
         const signedInUser = localStorage.getItem('signedInuser')
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
-        const response = await fetch('/api/v1/mylibrary/books/postbook',{
+        const response = await fetch('https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/postbook',{
             method: "POST",
             headers : {
                 Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ export const deleteMyBook = createAsyncThunk(
         const signedInUser = localStorage.getItem('signedInuser')
         const userToken = JSON.parse(signedInUser)
         const { token } = userToken
-        const response = await fetch('/api/v1/mylibrary/books/deletebook/'+payload,{
+        const response = await fetch('https://bookshareserver.herokuapp.com/api/v1/mylibrary/books/deletebook/'+payload,{
             method: "DELETE",
             headers : {
                 Authorization: `Bearer ${token}`
@@ -65,6 +65,10 @@ export const deleteMyBook = createAsyncThunk(
         if(response.ok){
             const data = await response.json();
             return { data }
+        }else{
+            const errorMessage = await response.json();
+            return { errorMessage }
+            // console.log(errorMessage)
         }
     }
 )
@@ -111,7 +115,7 @@ export const userPostSlice = createSlice({
             console.log("Sending data")
         },
         [addBook.fulfilled]: (state, action) => {
-            console.log(Array.isArray(state))
+            console.log(action.payload.data)
             state.push(action.payload.data)
         },
         [addBook.rejected]: (state, action) => {
@@ -123,7 +127,7 @@ export const userPostSlice = createSlice({
         },
         [deleteMyBook.fulfilled]: (state, action) => {
             const d = state.filter(book => book._id !== action.payload.data)
-            console.log(d)
+            console.log(action.payload)
         },
         [deleteMyBook.rejected]: (state, action) => {
             // state.userPost = state.userPost.filter(book => book._id !==

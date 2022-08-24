@@ -28,7 +28,8 @@ const createComment = async (req, res) => {
                 $push:{comments:newComment}
             },{new:true})
             
-            res.status(201).json(postedBookData)
+            res.status(201).json(newComment)
+            console.log(postedBookData.comments)
     } catch (error) {
         res.status(500).json({Err: error.message})
     }
